@@ -44,8 +44,8 @@ func reset():
 	$Player.scroll_up_limit = 540/2
 	$Player.scroll_down_limit = 540/2
 	
-	await get_tree().create_timer(2).timeout
-	$UILayer/IncidentTimer.go()
+	#await get_tree().create_timer(2).timeout
+	#$UILayer/IncidentTimer.go()
 
 
 func _on_incident_timer_time_up():

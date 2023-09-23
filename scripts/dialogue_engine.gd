@@ -49,6 +49,7 @@ func _ready():
 	#}
 	#await get_tree().create_timer(2).timeout
 	#start_dialogue(params, "assets/characters/TEMP.png", "assets/characters/TEMP.png")
+	play_dialogue_file("dialogues/TEST2.json")
 	pass
 
 
@@ -83,6 +84,18 @@ func next_lower(speed: float = 1):
 		current_lower += 1
 	else:
 		end_dialogue()
+
+func type_to_box(text: String, label: RichTextLabel, speed: float = 1.0):
+	typing = true
+	var partial: String = ""
+	for ch in range(len(text)):
+		partial += text[ch]
+		label.text = partial
+		await get_tree().create_timer(0.1 / speed).timeout
+	typing = false
+	
+	label.get_parent().get_node("Proceed").visible = true
+	$DialogueBoxAnimation.play("proceed")
 
 
 # Params is a dict, with the following content:
@@ -137,15 +150,37 @@ func end_dialogue():
 
 
 
-func type_to_box(text: String, label: RichTextLabel, speed: float = 1.0):
-	typing = true
-	var partial: String = ""
-	for ch in range(len(text)):
-		partial += text[ch]
-		label.text = partial
-		await get_tree().create_timer(0.1 / speed).timeout
-	typing = false
+func play_dialogue_file(filename: String):
+	print("Loading Dialogue from res://%s" % filename)
+	var dialogue_file = FileAccess.open("res://" + filename, FileAccess.READ)
+	var json = JSON.new()
+	var dialogue_data_err = json.parse(dialogue_file.get_as_text())
 	
-	label.get_parent().get_node("Proceed").visible = true
-	$DialogueBoxAnimation.play("proceed")
-
+	if dialogue_data_err == OK:
+		var dialogue_data = json.data
+		if typeof(dialogue_data["upper"]) != TYPE_ARRAY:
+			assert("You need a list of upper dialogue at the minimum for this to work.")
+		if typeof(dialogue_data["portraits"]["upper"]) != TYPE_STRING:
+			assert("An upper portrait is needed.")
+		
+		var params = {}
+		
+		params["upper_text"] = dialogue_data["upper"]
+		var upper_portrait = dialogue_data["portraits"]["upper"]
+		var lower_portrait = ""
+		
+		params["show_lower"] = false
+		if ("lower" in dialogue_data):
+			params["show_lower"] = true
+			params["lower_text"] = dialogue_data["lower"]
+			lower_portrait = dialogue_data["portraits"]["lower"]
+		
+		params["behavior"] = "back_and_forth"
+		if ("settings" in dialogue_data):
+			if ("behavior" in dialogue_data["settings"]):
+				params["behavior"] = dialogue_data["behavior"]
+		
+		start_dialogue(params, upper_portrait, lower_portrait)
+		
+	else:
+		assert("Oh no, this dialogue file is invalid!")
