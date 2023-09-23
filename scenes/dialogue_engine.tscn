@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c4mxg6pn32x0l"]
+[gd_scene load_steps=13 format=3 uid="uid://dxl2f1v6ao6o6"]
 
 [ext_resource type="FontFile" uid="uid://dltdgwcyvk5uo" path="res://assets/font/normal_400.ttf" id="1_073ca"]
 [ext_resource type="Script" path="res://scripts/dialogue_engine.gd" id="1_m5xj3"]
@@ -48,19 +48,32 @@ tracks/1/keys = {
 "values": [Vector2(25, 1105)]
 }
 
-[sub_resource type="Animation" id="Animation_wmecp"]
-resource_name = "upper_in"
+[sub_resource type="Animation" id="Animation_j4pvs"]
+resource_name = "proceed"
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UpperBox:position")
+tracks/0/path = NodePath("UpperBox/Proceed:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.4, 0.4),
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(25, -325), Vector2(25, 25)]
+"values": [0.0, -0.0872665, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LowerBox/Proceed:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.0872665, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_exn00"]
@@ -90,21 +103,6 @@ tracks/1/keys = {
 "values": [Vector2(25, 1105), Vector2(25, 755)]
 }
 
-[sub_resource type="Animation" id="Animation_pj0x8"]
-resource_name = "upper_out"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("UpperBox:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.4, 0.4),
-"update": 0,
-"values": [Vector2(25, 25), Vector2(25, -325)]
-}
-
 [sub_resource type="Animation" id="Animation_sf1o8"]
 resource_name = "upper_and_lower_out"
 tracks/0/type = "value"
@@ -132,32 +130,34 @@ tracks/1/keys = {
 "values": [Vector2(25, 755), Vector2(25, 1105)]
 }
 
-[sub_resource type="Animation" id="Animation_j4pvs"]
-resource_name = "proceed"
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_wmecp"]
+resource_name = "upper_in"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UpperBox/Proceed:rotation")
+tracks/0/path = NodePath("UpperBox:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.4, 0.4),
 "update": 0,
-"values": [0.0, -0.0872665, 0.0]
+"values": [Vector2(25, -325), Vector2(25, 25)]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("LowerBox/Proceed:rotation")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
+
+[sub_resource type="Animation" id="Animation_pj0x8"]
+resource_name = "upper_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UpperBox:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.4, 0.4),
 "update": 0,
-"values": [0.0, -0.0872665, 0.0]
+"values": [Vector2(25, 25), Vector2(25, -325)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8oxi0"]
@@ -245,6 +245,7 @@ grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_sdy3a")
 
 [node name="Portrait" type="TextureRect" parent="LowerBox"]
+layout_mode = 0
 offset_left = 50.0
 offset_top = 50.0
 offset_right = 250.0
