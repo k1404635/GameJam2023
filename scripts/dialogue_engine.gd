@@ -1,5 +1,28 @@
 extends Control
 
+# HOW TO USE THE DIALOGUE ENGINE
+# Using the dialogue engine is simple.
+
+# First, from the world scene, ensure DialogueEngine is instantiated (it should be already, under UILayer)
+# With DialogueEngine instantiated, all you need to do is call $DialogueEngine.start_dialogue with the correct parameters.
+# First, you'll need a dict, with the following properties:
+# - "show_lower", a boolean for whether or not the lower dialogue option is used
+# - "upper_text", a list of strings that represent the text shown for the upper dialogue
+# - "lower_text", same as upper_text, except for the lower dialogue
+# - "behavior", defines the behavior when lower dialogue is enabled, currently ONLY "back_and_forth" is valid
+
+# Next, you need the path to the character portrait images from res://.
+# This typically is just the folders, followed by the full filename, e.g. path/to/portrait/my_portrait.png
+# If you're using the lower dialogue, you will need 2 portraits.
+
+# Finally, call start_dialogue with your dict and 2 portrait files, and the dialogue engine should handle the rest.
+
+# BONUS: If the text is too slow, we can adjust the speed by changing BASE_SPEED. Currently, there is no way to change
+# the speed text is shown for each individual string.
+
+# It's probably most helpful to uncomment the code under TEST CODE in _ready() to see how this works.
+
+
 # Data
 var behavior = "back_and_forth"
 var upper_text = [""]
