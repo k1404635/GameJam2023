@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dk2qsktna2xdr"]
+[gd_scene load_steps=8 format=3 uid="uid://dk2qsktna2xdr"]
 
 [ext_resource type="Texture2D" uid="uid://dfmqmlgp801yd" path="res://assets/scenery/PARK_LB.png" id="1_d27d8"]
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_tjtwd"]
 [ext_resource type="Texture2D" uid="uid://bg5xi8ahd7y47" path="res://assets/characters/TEMP.png" id="2_avld7"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_ovl6i"]
+[ext_resource type="PackedScene" uid="uid://c4mxg6pn32x0l" path="res://scenes/dialogue_engine.tscn" id="5_3u4qo"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bmic4"]
 radius = 50.0
@@ -36,3 +37,7 @@ position = Vector2(960, 540)
 
 [node name="ScrollBoundary" type="CollisionShape2D" parent="ScrollLimits"]
 shape = SubResource("RectangleShape2D_enfpd")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="DialogueEngine" parent="UILayer" instance=ExtResource("5_3u4qo")]
