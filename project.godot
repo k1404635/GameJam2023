@@ -11,3 +11,4 @@ config_version=5
 [application]
 
 config/name="Jam Game"
+config/features=PackedStringArray("4.1")
