@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbspwfcn0kt6w"
-path="res://.godot/imported/jar.png-c3ff0cbcd8ba241963b831cd25175db6.ctex"
+uid="uid://dfmqmlgp801yd"
+path="res://.godot/imported/PARK_LB.png-5f354ca8abee8f73766215b2d1040f65.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/jar.png"
-dest_files=["res://.godot/imported/jar.png-c3ff0cbcd8ba241963b831cd25175db6.ctex"]
+source_file="res://assets/scenery/PARK_LB.png"
+dest_files=["res://.godot/imported/PARK_LB.png-5f354ca8abee8f73766215b2d1040f65.ctex"]
 
 [params]
 
