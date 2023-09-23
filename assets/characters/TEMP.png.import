@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bi7erc416i1hv"
-path="res://.godot/imported/words.png-d0416e1bd57bc93a8c5b433a628bd523.ctex"
+uid="uid://bg5xi8ahd7y47"
+path="res://.godot/imported/TEMP.png-bfafed08d9a0eaaff7d1c46e5e4ce0c2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/words.png"
-dest_files=["res://.godot/imported/words.png-d0416e1bd57bc93a8c5b433a628bd523.ctex"]
+source_file="res://assets/characters/TEMP.png"
+dest_files=["res://.godot/imported/TEMP.png-bfafed08d9a0eaaff7d1c46e5e4ce0c2.ctex"]
 
 [params]
 
