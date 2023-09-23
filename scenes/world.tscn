@@ -33,6 +33,7 @@ centered = false
 [node name="UILayer" type="CanvasLayer" parent="."]
 
 [node name="DialogueEngine" parent="UILayer" instance=ExtResource("5_3u4qo")]
+BASE_SPEED = null
 
 [node name="IncidentTimer" parent="UILayer" instance=ExtResource("6_hrpew")]
 

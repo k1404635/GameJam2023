@@ -1,3 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
 assets/MOCKUP/
+*.godot
+project.godot

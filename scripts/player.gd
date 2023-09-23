@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+@onready var all_interactions = []
+@onready var interactLabel = $"Interaction Components/InteractLabel"
+
 var scroll_left_limit = 0
 var scroll_right_limit = 0
 var scroll_up_limit = 0
@@ -8,6 +11,9 @@ var scroll_down_limit = 0
 var scroll_velocity: Vector2 = Vector2(0, 0)
 
 const SPEED = 300.0 * 60
+
+func _ready():
+	update_interactions()
 
 func _physics_process(delta):
 	
@@ -31,4 +37,39 @@ func _physics_process(delta):
 
 	move_and_slide()
 	
+	if Input.is_action_just_pressed("interact"):
+		execute_interactions()
+	
 # Up POSSIBLE only if y < scroll_y_limit
+
+
+# Interaction methods
+
+func _on_interaction_area_area_entered(area):
+	all_interactions.insert(0, area)
+	update_interactions()
+
+func _on_interaction_area_area_exited(area):
+	all_interactions.erase(area)
+	update_interactions()
+	
+func update_interactions():
+	if all_interactions:
+		interactLabel.text = all_interactions[0].interact_label
+	else:
+		interactLabel.text = ""
+		
+		
+func execute_interactions():
+	if all_interactions:
+		var cur_interaction = all_interactions[0]
+		var params = {
+			"show_lower": cur_interaction.show_lower,
+			"upper_text": cur_interaction.upper_text,
+			"lower_text": cur_interaction.lower_text,
+			"behavior": cur_interaction.behav
+			}
+		var upper = cur_interaction.upper_filepath
+		var lower = cur_interaction.lower_filepath
+		match cur_interaction.interact_type:
+			"dialogue" : get_tree().call_group("Dialogue interactions","start_dialogue", params, upper, lower)
