@@ -18,14 +18,14 @@ var current_lower = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# TEST CODE
-	#var params = {
-	#	"show_lower": true,
-	#	"upper_text": ["Hi, Robert!", "...", "You stink."],
-	#	"lower_text": ["Hi, Circle.", "...", "Doesn't stop you from being a circle"],
-	#	"behavior": "back_and_forth"
-	#}
-	#await get_tree().create_timer(2).timeout
-	#start_dialogue(params, "assets/characters/TEMP.png", "assets/characters/TEMP.png")
+#	var params = {
+#		"show_lower": true,
+#		"upper_text": ["Hi, Robert!", "...", "You stink."],
+#		"lower_text": ["Hi, Circle.", "...", "Doesn't stop you from being a circle"],
+#		"behavior": "back_and_forth"
+#	}
+#	await get_tree().create_timer(2).timeout
+#	start_dialogue(params, "assets/characters/TEMP.png", "assets/characters/TEMP.png")
 	pass
 
 
