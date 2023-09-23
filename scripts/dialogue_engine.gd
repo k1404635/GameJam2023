@@ -32,6 +32,7 @@ var show_lower = false
 # Properties
 var active = false
 var typing = false
+var bypass_typing = false
 
 var current_upper = 0
 var current_lower = 0
@@ -49,7 +50,7 @@ func _ready():
 	#}
 	#await get_tree().create_timer(2).timeout
 	#start_dialogue(params, "assets/characters/TEMP.png", "assets/characters/TEMP.png")
-	play_dialogue_file("dialogues/TEST2.json")
+	#play_dialogue_file("dialogues/TEST2.json")
 	pass
 
 
@@ -64,6 +65,8 @@ func _process(delta):
 					next_lower(BASE_SPEED)
 		else:
 			next_upper(BASE_SPEED)
+	elif active and Input.is_action_just_pressed("advance_dialogue"):
+		bypass_typing = true
 
 
 
@@ -88,10 +91,16 @@ func next_lower(speed: float = 1):
 func type_to_box(text: String, label: RichTextLabel, speed: float = 1.0):
 	typing = true
 	var partial: String = ""
+	
 	for ch in range(len(text)):
 		partial += text[ch]
 		label.text = partial
 		await get_tree().create_timer(0.1 / speed).timeout
+		if (bypass_typing):
+			label.text = text
+			break
+	
+	bypass_typing = false
 	typing = false
 	
 	label.get_parent().get_node("Proceed").visible = true
