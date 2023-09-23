@@ -7,10 +7,6 @@ const SCREEN_HEIGHT = 1080
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Player.scroll_left_limit = 960/2
-	$Player.scroll_right_limit = 960/2
-	$Player.scroll_up_limit = 540/2
-	$Player.scroll_down_limit = 540/2
 	reset()
 
 
@@ -42,3 +38,16 @@ func _process(delta):
 func reset():
 	$Scroll.position = Vector2(-960, -2700)
 	$Player.position = Vector2(960, 540)
+	
+	$Player.scroll_left_limit = 960/2
+	$Player.scroll_right_limit = 960/2
+	$Player.scroll_up_limit = 540/2
+	$Player.scroll_down_limit = 540/2
+	
+	await get_tree().create_timer(2).timeout
+	$UILayer/IncidentTimer.go()
+
+
+func _on_incident_timer_time_up():
+	var tween = get_tree().create_tween()
+	tween.tween_property($UILayer/Bleak, "color", Color("#171d29a0"), 2.0)
