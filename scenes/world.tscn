@@ -114,9 +114,9 @@ shader_parameter/brightness = 1.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_brhpj"]
 bg_color = Color(0.686275, 0.690196, 0.717647, 1)
 
-[sub_resource type="Animation" id="Animation_n3ah7"]
-resource_name = "Unpause"
-length = 0.001
+[sub_resource type="Animation" id="Animation_10j2m"]
+resource_name = "Pause"
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -124,10 +124,10 @@ tracks/0/path = NodePath(".:material:shader_parameter/brightness")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(0.5),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [1.0]
+"values": [1.0, 0.7]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -136,10 +136,10 @@ tracks/1/path = NodePath("CenterContainer:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(0.5),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_1i4ka"]
@@ -169,9 +169,9 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_10j2m"]
-resource_name = "Pause"
-length = 0.3
+[sub_resource type="Animation" id="Animation_n3ah7"]
+resource_name = "Unpause"
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -179,10 +179,10 @@ tracks/0/path = NodePath(".:material:shader_parameter/brightness")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(0.5, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.5),
 "update": 0,
-"values": [1.0, 0.7]
+"values": [1.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -191,10 +191,10 @@ tracks/1/path = NodePath("CenterContainer:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(0.5, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.5),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gnjgk"]
