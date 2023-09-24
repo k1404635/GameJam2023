@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var all_interactions = []
-@onready var interactLabel = $"Interaction Components/InteractLabel"
+#@onready var interactLabel = $"Interaction Components/InteractLabel"
 
 var scroll_left_limit = 0
 var scroll_right_limit = 0
@@ -14,6 +14,7 @@ const SPEED = 300.0 * 60
 
 func _ready():
 	update_interactions()
+
 
 func _physics_process(delta):
 	
@@ -39,9 +40,11 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("interact"):
 		execute_interactions()
+		
+	if Input.is_action_just_pressed("ui_cancel"):
+		get_tree().call_group("Pause", "pause")
 	
 # Up POSSIBLE only if y < scroll_y_limit
-
 
 # Interaction methods
 
@@ -54,11 +57,9 @@ func _on_interaction_area_area_exited(area):
 	update_interactions()
 	
 func update_interactions():
-	if all_interactions:
-		interactLabel.text = all_interactions[0].interact_label
-	else:
-		interactLabel.text = ""
-		
+#	if all_interactions:
+#		interactLabel.text = all_interactions[0].interact_label
+	pass
 		
 func execute_interactions():
 	if all_interactions:
@@ -73,3 +74,5 @@ func execute_interactions():
 		var lower = cur_interaction.lower_filepath
 		match cur_interaction.interact_type:
 			"dialogue" : get_tree().call_group("Dialogue interactions","start_dialogue", params, upper, lower)
+
+
