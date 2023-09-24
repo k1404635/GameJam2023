@@ -10,11 +10,17 @@
 
 	"upper": [
 		"(I should take shorter naps.)",
-		"Hi Ida, I'm......",
+		"Hi Ida, I'm...... Hey, why are you alone at the park at this time? Where are your parents?",
+		"... Oh I'm sorry...",
+		"After she comes back from work?",
+		"... Huh."
 	],
 
 	"lower": [
 		"Hi Mister!",
-		"What's your name? I'm Ida."
+		"What's your name? I'm Ida.",
+		"Well, Mom is busy at work. And dad is...",
+		"It’s okay. I don’t even remember my dad. I came outside because I was too bored. There is nothing to do at home! Besides, mom doesn’t play with me when she comes back either...",
+		"Yeah! She is always grumpy... saying that she’s tired from work.",
 	]
 }

@@ -1,4 +1,8 @@
 {
+	"settings": {
+		"id": "mother"
+	},
+
 	"portraits": {
 		"upper": "assets/characters/player_portrait.png",
 		"lower": "assets/characters/single_portrait.png"

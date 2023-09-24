@@ -1,0 +1,11 @@
+{
+	"portraits": {
+		"upper": "assets/characters/player_portrait.png"
+	},
+
+	"upper": [
+		"No...",
+		"Not again...",
+		"Surely, this time, the killer will be found..."
+	]
+}

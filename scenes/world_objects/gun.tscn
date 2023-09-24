@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://3mjp1a2h6erj"]
+
+[ext_resource type="PackedScene" uid="uid://r2g5rk1q14p6" path="res://scenes/world_objects/pickup_item.tscn" id="1_yjru6"]
+[ext_resource type="Texture2D" uid="uid://di6fkotm1iaqp" path="res://assets/items/gun.png" id="2_nw8ho"]
+
+[node name="Gun" instance=ExtResource("1_yjru6")]
+sprite = ExtResource("2_nw8ho")
+pickup_quip = "This might be necessary."
+pickup_name = "gun"

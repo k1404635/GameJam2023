@@ -1,4 +1,8 @@
 {
+	"settings": {
+		"id": "shopkeeper"
+	},
+
 	"portraits": {
 		"upper": "assets/characters/player_portrait.png",
 		"lower": "assets/characters/shopkeeper_portrait.png"

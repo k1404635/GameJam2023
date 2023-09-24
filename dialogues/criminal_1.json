@@ -1,4 +1,8 @@
 {
+	"settings": {
+		"id": "criminal"
+	},
+
 	"portraits": {
 		"upper": "assets/characters/player_portrait.png",
 		"lower": "assets/characters/criminal_portrait.png"
