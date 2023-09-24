@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dxl2f1v6ao6o6"]
+[gd_scene load_steps=13 format=3 uid="uid://c4mxg6pn32x0l"]
 
 [ext_resource type="FontFile" uid="uid://dltdgwcyvk5uo" path="res://assets/font/normal_400.ttf" id="1_073ca"]
 [ext_resource type="Script" path="res://scripts/dialogue_engine.gd" id="1_m5xj3"]

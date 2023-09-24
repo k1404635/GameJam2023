@@ -1,5 +1,28 @@
 extends Control
 
+# HOW TO USE THE DIALOGUE ENGINE
+# Using the dialogue engine is simple.
+
+# First, from the world scene, ensure DialogueEngine is instantiated (it should be already, under UILayer)
+# With DialogueEngine instantiated, all you need to do is call $DialogueEngine.start_dialogue with the correct parameters.
+# First, you'll need a dict, with the following properties:
+# - "show_lower", a boolean for whether or not the lower dialogue option is used
+# - "upper_text", a list of strings that represent the text shown for the upper dialogue
+# - "lower_text", same as upper_text, except for the lower dialogue
+# - "behavior", defines the behavior when lower dialogue is enabled, currently ONLY "back_and_forth" is valid
+
+# Next, you need the path to the character portrait images from res://.
+# This typically is just the folders, followed by the full filename, e.g. path/to/portrait/my_portrait.png
+# If you're using the lower dialogue, you will need 2 portraits.
+
+# Finally, call start_dialogue with your dict and 2 portrait files, and the dialogue engine should handle the rest.
+
+# BONUS: If the text is too slow, we can adjust the speed by changing BASE_SPEED. Currently, there is no way to change
+# the speed text is shown for each individual string.
+
+# It's probably most helpful to uncomment the code under TEST CODE in _ready() to see how this works.
+
+
 # Data
 var behavior = "back_and_forth"
 var upper_text = [""]
@@ -9,6 +32,7 @@ var show_lower = false
 # Properties
 var active = false
 var typing = false
+var bypass_typing = false
 
 var current_upper = 0
 var current_lower = 0
@@ -18,14 +42,15 @@ var current_lower = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# TEST CODE
-#	var params = {
-#		"show_lower": true,
-#		"upper_text": ["Hi, Robert!", "...", "You stink."],
-#		"lower_text": ["Hi, Circle.", "...", "Doesn't stop you from being a circle"],
-#		"behavior": "back_and_forth"
-#	}
-#	await get_tree().create_timer(2).timeout
-#	start_dialogue(params, "assets/characters/TEMP.png", "assets/characters/TEMP.png")
+	#var params = {
+	#	"show_lower": true,
+	#	"upper_text": ["Hi, Robert!", "...", "You stink."],
+	#	"lower_text": ["Hi, Circle.", "...", "Doesn't stop you from being a circle"],
+	#	"behavior": "back_and_forth"
+	#}
+	#await get_tree().create_timer(2).timeout
+	#start_dialogue(params, "assets/characters/TEMP.png", "assets/characters/TEMP.png")
+	#play_dialogue_file("dialogues/TEST2.json")
 	pass
 
 
@@ -40,6 +65,8 @@ func _process(delta):
 					next_lower(BASE_SPEED)
 		else:
 			next_upper(BASE_SPEED)
+	elif active and Input.is_action_just_pressed("advance_dialogue"):
+		bypass_typing = true
 
 
 
@@ -60,6 +87,24 @@ func next_lower(speed: float = 1):
 		current_lower += 1
 	else:
 		end_dialogue()
+
+func type_to_box(text: String, label: RichTextLabel, speed: float = 1.0):
+	typing = true
+	var partial: String = ""
+	
+	for ch in range(len(text)):
+		partial += text[ch]
+		label.text = partial
+		await get_tree().create_timer(0.1 / speed).timeout
+		if (bypass_typing):
+			label.text = text
+			break
+	
+	bypass_typing = false
+	typing = false
+	
+	label.get_parent().get_node("Proceed").visible = true
+	$DialogueBoxAnimation.play("proceed")
 
 
 # Params is a dict, with the following content:
@@ -114,15 +159,37 @@ func end_dialogue():
 
 
 
-func type_to_box(text: String, label: RichTextLabel, speed: float = 1.0):
-	typing = true
-	var partial: String = ""
-	for ch in range(len(text)):
-		partial += text[ch]
-		label.text = partial
-		await get_tree().create_timer(0.1 / speed).timeout
-	typing = false
+func play_dialogue_file(filename: String):
+	print("Loading Dialogue from res://%s" % filename)
+	var dialogue_file = FileAccess.open("res://" + filename, FileAccess.READ)
+	var json = JSON.new()
+	var dialogue_data_err = json.parse(dialogue_file.get_as_text())
 	
-	label.get_parent().get_node("Proceed").visible = true
-	$DialogueBoxAnimation.play("proceed")
-
+	if dialogue_data_err == OK:
+		var dialogue_data = json.data
+		if typeof(dialogue_data["upper"]) != TYPE_ARRAY:
+			assert("You need a list of upper dialogue at the minimum for this to work.")
+		if typeof(dialogue_data["portraits"]["upper"]) != TYPE_STRING:
+			assert("An upper portrait is needed.")
+		
+		var params = {}
+		
+		params["upper_text"] = dialogue_data["upper"]
+		var upper_portrait = dialogue_data["portraits"]["upper"]
+		var lower_portrait = ""
+		
+		params["show_lower"] = false
+		if ("lower" in dialogue_data):
+			params["show_lower"] = true
+			params["lower_text"] = dialogue_data["lower"]
+			lower_portrait = dialogue_data["portraits"]["lower"]
+		
+		params["behavior"] = "back_and_forth"
+		if ("settings" in dialogue_data):
+			if ("behavior" in dialogue_data["settings"]):
+				params["behavior"] = dialogue_data["behavior"]
+		
+		start_dialogue(params, upper_portrait, lower_portrait)
+		
+	else:
+		assert("Oh no, this dialogue file is invalid!")
