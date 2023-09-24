@@ -1,0 +1,91 @@
+[gd_scene load_steps=5 format=3 uid="uid://2sa5b6ufheah"]
+
+[ext_resource type="Script" path="res://Menu.gd" id="1_4n4v0"]
+[ext_resource type="Texture2D" uid="uid://c1d170n1fqt5n" path="res://park1.png" id="2_5kwy8"]
+[ext_resource type="FontFile" uid="uid://217aelqems2l" path="res://ScaryLight-owqdd.ttf" id="2_tbrq8"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_7ynkr"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 440.0
+offset_top = 334.0
+offset_right = -619.0
+offset_bottom = -187.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4n4v0")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+texture_repeat = 2
+position = Vector2(440, 334)
+motion_mirroring = Vector2(2.08165e-12, 2.08165e-12)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(42, -222)
+texture = ExtResource("2_5kwy8")
+
+[node name="MarginContainer" type="MarginContainer" parent="ParallaxBackground/ParallaxLayer/Sprite2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1066.5
+offset_top = -610.0
+offset_right = -343.5
+offset_bottom = -160.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.998173, 1.01258)
+
+[node name="VBoxContainerForTitle" type="VBoxContainer" parent="ParallaxBackground/ParallaxLayer/Sprite2D/MarginContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 20)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ParallaxBackground/ParallaxLayer/Sprite2D/MarginContainer/VBoxContainerForTitle"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0784314, 0.145098, 0.12549, 1)
+theme_override_fonts/font = ExtResource("2_tbrq8")
+theme_override_font_sizes/font_size = 120
+text = "The Park"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ParallaxBackground/ParallaxLayer/Sprite2D/MarginContainer/VBoxContainerForTitle"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ParallaxBackground/ParallaxLayer/Sprite2D/MarginContainer/VBoxContainerForTitle/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="ParallaxBackground/ParallaxLayer/Sprite2D/MarginContainer/VBoxContainerForTitle/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../../VBoxContainer3/QuitButton")
+theme_override_colors/icon_hover_color = Color(0.027451, 0.105882, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_tbrq8")
+theme_override_font_sizes/font_size = 36
+action_mode = 0
+text = "Play"
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="ParallaxBackground/ParallaxLayer/Sprite2D/MarginContainer/VBoxContainerForTitle/VBoxContainer"]
+layout_mode = 2
+
+[node name="QuitButton" type="Button" parent="ParallaxBackground/ParallaxLayer/Sprite2D/MarginContainer/VBoxContainerForTitle/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../../VBoxContainer/StartButton")
+theme_override_fonts/font = ExtResource("2_tbrq8")
+theme_override_font_sizes/font_size = 36
+text = "Quit"
+icon = SubResource("ViewportTexture_7ynkr")
+
+[connection signal="pressed" from="ParallaxBackground/ParallaxLayer/Sprite2D/MarginContainer/VBoxContainerForTitle/VBoxContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="ParallaxBackground/ParallaxLayer/Sprite2D/MarginContainer/VBoxContainerForTitle/VBoxContainer/VBoxContainer3/QuitButton" to="." method="_on_quit_button_pressed"]
