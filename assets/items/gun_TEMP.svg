@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="200"
+   height="200"
+   viewBox="0 0 200 200"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="gun_TEMP.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="1.3238075"
+     inkscape:cx="73.273492"
+     inkscape:cy="55.899365"
+     inkscape:window-width="948"
+     inkscape:window-height="993"
+     inkscape:window-x="964"
+     inkscape:window-y="35"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g3"
+       transform="matrix(1.2857143,0,0,1.2857143,-15.251839,-34.07511)">
+      <path
+         style="fill:none;stroke:#16171a;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:markers stroke fill"
+         d="m 69.973155,74.086079 8.599741,16.077796"
+         id="path3" />
+      <path
+         style="fill:none;stroke:#16171a;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:markers stroke fill"
+         d="m 59.129993,80.068515 6.730229,22.808045 h 36.268548"
+         id="path2" />
+      <rect
+         style="fill:#26282d;stroke:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="rect1"
+         width="140"
+         height="30"
+         x="19.640318"
+         y="49.856194"
+         ry="10" />
+      <rect
+         style="fill:#26282d;stroke:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="rect2"
+         width="60"
+         height="130"
+         x="91.554153"
+         y="39.28064"
+         ry="10" />
+      <rect
+         style="fill:#1e2126;fill-opacity:1;stroke:none;stroke-width:6.47039;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+         id="rect3"
+         width="42.0527"
+         height="77.653671"
+         x="105.01461"
+         y="86.392342"
+         ry="5.9733591" />
+    </g>
+  </g>
+</svg>

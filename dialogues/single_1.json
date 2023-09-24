@@ -1,0 +1,19 @@
+{
+	"portraits": {
+		"upper": "assets/characters/player_portrait.png",
+		"lower": "assets/characters/single_portrait.png"
+	},
+
+	"upper": [
+		"Hey, is your child wandering around right now?",
+		"Oh...",
+		"I thought the kid I that just talked to me was yours... Is she not?",
+		"Alright."
+	],
+
+	"lower": [
+		"No, sorry, she's with her father right now.",
+		"Yeah, she's in the nearest other city. Why do you ask?",
+		"There's another kid over here? That's odd, I thought I was the only parent here."
+	]
+}

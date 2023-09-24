@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://r2g5rk1q14p6"]
+
+[ext_resource type="Texture2D" uid="uid://cbry0t0rprvqt" path="res://assets/items/gun_TEMP.png" id="1_bnl8t"]
+[ext_resource type="Script" path="res://scripts/world_objects/pickup_item.gd" id="1_kfgkv"]
+[ext_resource type="Script" path="res://scripts/Interactive/interact_area.gd" id="2_d41hl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a3ny4"]
+radius = 100.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pse3b"]
+radius = 50.0
+
+[node name="PickupItem" type="Node2D"]
+script = ExtResource("1_kfgkv")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_bnl8t")
+
+[node name="Interactable" type="Area2D" parent="."]
+script = ExtResource("2_d41hl")
+type = "item_pickup"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
+shape = SubResource("CircleShape2D_a3ny4")
+
+[node name="Collision" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision"]
+shape = SubResource("CircleShape2D_pse3b")

@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://ckxmxpdruivln"]
+
+[ext_resource type="Script" path="res://scripts/world_objects/tree.gd" id="1_frctp"]
+[ext_resource type="Texture2D" uid="uid://d41farb03ml" path="res://assets/environment/tree_leaves.png" id="1_nii4a"]
+[ext_resource type="Texture2D" uid="uid://dfhuj2lcrt7a8" path="res://assets/environment/tree_trunk.png" id="1_v0ypw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fvdr5"]
+size = Vector2(180, 20)
+
+[node name="Tree" type="Node2D"]
+script = ExtResource("1_frctp")
+
+[node name="Overlay" type="Sprite2D" parent="."]
+z_index = 3
+texture = ExtResource("1_nii4a")
+
+[node name="OnLayer" type="Sprite2D" parent="."]
+texture = ExtResource("1_v0ypw")
+
+[node name="Collision" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision"]
+position = Vector2(0, 380)
+shape = SubResource("RectangleShape2D_fvdr5")
+
+[node name="OverlayChecker" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="OverlayChecker"]
+polygon = PackedVector2Array(-327, -368, -218, -379, -131, -308, -31, -295, 51, -336, 135, -320, 176, -274, 218, -306, 286, -319, 338, -294, 347, -196, 309, -149, 356, -130, 356, -44, 275, 6, 249, 38, 243, 145, 1, 113, -6, 57, -58, 54, -68, 93, -245, 138, -288, -14, -368, -19, -348, -124, -286, -174, -298, -242, -352, -244)

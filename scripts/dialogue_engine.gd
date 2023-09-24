@@ -29,6 +29,9 @@ var upper_text = [""]
 var lower_text = [""]
 var show_lower = false
 
+var dialogue_type = "conversation"
+var dialogue_id = ""
+
 # Properties
 var active = false
 var typing = false
@@ -38,6 +41,11 @@ var current_upper = 0
 var current_lower = 0
 
 @export var BASE_SPEED = 2
+
+signal dialogue_finished(type, id)
+signal continued_dialogue
+signal item_usable
+signal item_not_usable
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -57,6 +65,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if active and not(typing) and Input.is_action_just_pressed("advance_dialogue"):
+		continued_dialogue.emit()
 		if (show_lower):
 			if (behavior == "back_and_forth"):
 				if (current_upper == current_lower):
@@ -73,20 +82,34 @@ func _process(delta):
 func next_upper(speed: float = 1):
 	$UpperBox/Proceed.visible = false
 	$LowerBox/Proceed.visible = false
+	item_not_usable.emit()
 	if (current_upper < len(upper_text)):
 		type_to_box(upper_text[current_upper], $UpperBox/Text, speed)
 		current_upper += 1
+		item_usable.emit()
 	else:
 		end_dialogue()
 
 func next_lower(speed: float = 1):
 	$UpperBox/Proceed.visible = false
 	$LowerBox/Proceed.visible = false
+	item_not_usable.emit()
 	if (current_lower < len(lower_text)):
 		type_to_box(lower_text[current_lower], $LowerBox/Text, speed)
 		current_lower += 1
+		item_usable.emit()
 	else:
 		end_dialogue()
+
+func override_upper(text: String, speed: float = 1):
+	$UpperBox/Proceed.visible = false
+	$LowerBox/Proceed.visible = false
+	type_to_box(text, $UpperBox/Text, speed)
+
+func override_lower(text: String, speed: float = 1):
+	$UpperBox/Proceed.visible = false
+	$LowerBox/Proceed.visible = false
+	type_to_box(text, $LowerBox/Text, speed)
 
 func type_to_box(text: String, label: RichTextLabel, speed: float = 1.0):
 	typing = true
@@ -141,6 +164,12 @@ func start_dialogue(params, upper_filepath: String = "", lower_filepath: String 
 		
 		$DialogueBoxAnimation.play("upper_in")
 	
+	if ("type" in params):
+		dialogue_type = params["type"]
+	
+	if ("id" in params):
+		dialogue_id = params["id"]
+	
 	# Automatically begin 1st text
 	await get_tree().create_timer(0.85).timeout
 	next_upper(BASE_SPEED)
@@ -152,9 +181,13 @@ func end_dialogue():
 		$DialogueBoxAnimation.play("upper_and_lower_out")
 	else:
 		$DialogueBoxAnimation.play("upper_out")
+		
+	$UpperBox/Text.text = ""
+	$LowerBox/Text.text = ""
 	
 	await get_tree().create_timer(1.05).timeout
 	
+	dialogue_finished.emit(dialogue_type, dialogue_id)
 	active = false
 
 

@@ -1,29 +1,38 @@
-extends Path2D
+class_name NPC extends Path2D
+
+@export_category("Appearance")
+@export var sprite: Texture2D
+@export var sprite_down_point: float = 50
 
 @export_category("Dialogue")
-@export var dialogue_id: String
+@export var dialogue_file: String
 
 @export_category("Travel Behavior")
 @export var pause_points: Array[float]
 
 # Travel speed: progress per second
-@export var travel_speed = 0.01
+@export var travel_speed: float = 0.01
 
 # Pause Duration: How long at each pause
-@export var pause_duration = 10
+@export var pause_duration: float = 10
+
+var in_dialogue = false
+var frozen = false
 
 var paused = 0
 
-signal start_dialogue(scene)
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$NPCFollow/Interactable.dialogue_file = dialogue_file
+	if (sprite != null):
+		$NPCFollow/NPC/NPCSprite.texture = sprite
+		$NPCFollow/NPC/NPCSprite.scale = Vector2(0.5, -0.5)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	travel(delta)
+	if not(in_dialogue) and not(frozen):
+		travel(delta)
 
 
 func travel(delta):
@@ -31,8 +40,10 @@ func travel(delta):
 		$NPCFollow.progress_ratio += travel_speed * delta
 		
 		for p in pause_points:
-			if ($NPCFollow.progress_ratio - p <= 0.005):
+			if (abs($NPCFollow.progress_ratio - p) <= 0.001):
 				paused = pause_duration
+				var tween = get_tree().create_tween()
+				tween.tween_property($NPCFollow, "progress_ratio", $NPCFollow.progress_ratio + 0.002, 0.2)
 		
 		if ($NPCFollow.progress_ratio >= 1):
 			$NPCFollow.progress_ratio = 0
@@ -47,8 +58,8 @@ func randomize_position():
 	$NPCFollow.progress = randf()
 
 
+func entered_dialogue():
+	in_dialogue = true
 
-func _on_dialogue_trigger_body_entered(body):
-	print(body.
-	if (body):
-		start_dialogue.emit(dialogue_id)
+func exited_dialogue():
+	in_dialogue = false
