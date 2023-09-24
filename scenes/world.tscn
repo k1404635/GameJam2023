@@ -1,16 +1,89 @@
-[gd_scene load_steps=16 format=3 uid="uid://dk2qsktna2xdr"]
+[gd_scene load_steps=22 format=3 uid="uid://dk2qsktna2xdr"]
 
 [ext_resource type="Texture2D" uid="uid://dfmqmlgp801yd" path="res://assets/scenery/PARK_LB.png" id="1_d27d8"]
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_tjtwd"]
-[ext_resource type="Texture2D" uid="uid://bg5xi8ahd7y47" path="res://assets/characters/TEMP.png" id="2_avld7"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_ovl6i"]
+[ext_resource type="Texture2D" uid="uid://caeolyfmyy8aa" path="res://assets/characters/player_spritesheet_ref.png" id="3_dyhc0"]
+[ext_resource type="FontFile" uid="uid://dltdgwcyvk5uo" path="res://assets/font/normal_400.ttf" id="4_0xifn"]
 [ext_resource type="PackedScene" uid="uid://c4mxg6pn32x0l" path="res://scenes/dialogue_engine.tscn" id="5_3u4qo"]
+[ext_resource type="Script" path="res://scripts/Interactive/interact_area.gd" id="5_o5vtb"]
+[ext_resource type="Texture2D" uid="uid://dd1clyiyrw5hh" path="res://assets/characters/TEMP_2.png" id="6_hbwyn"]
 [ext_resource type="PackedScene" uid="uid://bb46uky5tiqcy" path="res://scenes/incident_timer.tscn" id="6_hrpew"]
 [ext_resource type="Shader" path="res://blur.gdshader" id="7_17qm0"]
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="8_82ubd"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_bmic4"]
-radius = 50.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4a0i"]
+atlas = ExtResource("3_dyhc0")
+region = Rect2(1200, 0, 400, 600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1dnr"]
+atlas = ExtResource("3_dyhc0")
+region = Rect2(800, 0, 400, 600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1e0cm"]
+atlas = ExtResource("3_dyhc0")
+region = Rect2(400, 0, 400, 600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6piyr"]
+atlas = ExtResource("3_dyhc0")
+region = Rect2(0, 0, 400, 600)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j1qbv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4a0i")
+}],
+"loop": true,
+"name": &"back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1dnr")
+}],
+"loop": true,
+"name": &"forward",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1e0cm")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6piyr")
+}],
+"loop": true,
+"name": &"walk_right",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ss2b"]
+size = Vector2(90, 40)
+
+[sub_resource type="LabelSettings" id="LabelSettings_n5ibv"]
+font = ExtResource("4_0xifn")
+font_size = 24
+font_color = Color(0.94902, 0.964706, 1, 1)
+outline_size = 4
+outline_color = Color(0.0862745, 0.0901961, 0.101961, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xol0p"]
+radius = 150.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxiwo"]
+size = Vector2(100, 100)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gtaao"]
+radius = 25.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sw6p0"]
+size = Vector2(1720, 20)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_byaf0"]
 shader = ExtResource("7_17qm0")
@@ -116,11 +189,35 @@ script = ExtResource("1_tjtwd")
 position = Vector2(960, 540)
 script = ExtResource("2_ovl6i")
 
-[node name="PlayerSprite" type="Sprite2D" parent="Player"]
-texture = ExtResource("2_avld7")
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(-5, 0)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_j1qbv")
+animation = &"forward"
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="Player"]
-shape = SubResource("CircleShape2D_bmic4")
+position = Vector2(0, 115)
+shape = SubResource("RectangleShape2D_2ss2b")
+
+[node name="IndicatorLabel" type="Label" parent="Player"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -180.0
+offset_right = 0.5
+offset_bottom = -150.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_n5ibv")
+horizontal_alignment = 1
+
+[node name="PlayerInteraction" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/PlayerInteraction"]
+shape = SubResource("CircleShape2D_xol0p")
 
 [node name="Scroll" type="Node2D" parent="."]
 
@@ -129,10 +226,58 @@ z_index = -3
 texture = ExtResource("1_d27d8")
 centered = false
 
+[node name="Items" type="Node2D" parent="Scroll"]
+
+[node name="SampleInteractive" type="Area2D" parent="Scroll/Items"]
+position = Vector2(1920, 2160)
+script = ExtResource("5_o5vtb")
+upper_text = Array[String](["Hi?", "Sorry..."])
+lower_text = Array[String](["Who are you talking to!"])
+upper_filepath = "assets/characters/player_portrait.png"
+lower_filepath = "assets/characters/TEMP_2.png"
+show_lower = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scroll/Items/SampleInteractive"]
+shape = SubResource("RectangleShape2D_fxiwo")
+
+[node name="SampleSprite" type="Sprite2D" parent="Scroll/Items/SampleInteractive"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_hbwyn")
+
+[node name="Collision" type="StaticBody2D" parent="Scroll/Items/SampleInteractive"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scroll/Items/SampleInteractive/Collision"]
+shape = SubResource("CircleShape2D_gtaao")
+
+[node name="NPCs" type="Node2D" parent="Scroll"]
+
+[node name="NPCPath" parent="Scroll/NPCs" instance=ExtResource("8_2d66c")]
+dialogue_file = "dialogues/TEST2.json"
+pause_points = Array[float]([0.18, 0.5, 0.67])
+pause_duration = 5
+
+[node name="Collisions" type="Node2D" parent="Scroll"]
+
+[node name="Lake" type="StaticBody2D" parent="Scroll/Collisions"]
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Scroll/Collisions/Lake"]
+polygon = PackedVector2Array(1411, 374, 1614, 405, 1995, 503, 2224, 505, 2389, 498, 2538, 553, 2815, 795, 2855, 933, 2776, 1082, 2498, 1266, 2330, 1373, 2189, 1597, 2061, 1696, 1879, 1725, 1642, 1696, 1452, 1594, 1359, 1458, 1343, 1261, 1367, 1055, 1340, 850, 1292, 655, 1273, 484, 1329, 393)
+
+[node name="GateA" type="StaticBody2D" parent="Scroll/Collisions"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scroll/Collisions/GateA"]
+position = Vector2(860, 4090)
+shape = SubResource("RectangleShape2D_sw6p0")
+
+[node name="GateB" type="StaticBody2D" parent="Scroll/Collisions"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scroll/Collisions/GateB"]
+position = Vector2(2980, 4090)
+shape = SubResource("RectangleShape2D_sw6p0")
+
 [node name="UILayer" type="CanvasLayer" parent="."]
 
 [node name="DialogueEngine" parent="UILayer" instance=ExtResource("5_3u4qo")]
-BASE_SPEED = null
 
 [node name="IncidentTimer" parent="UILayer" instance=ExtResource("6_hrpew")]
 
@@ -207,4 +352,5 @@ libraries = {
 "": SubResource("AnimationLibrary_gnjgk")
 }
 
+[connection signal="area_entered" from="Scroll/Items/SampleInteractive" to="." method="_on_sample_interactive_area_entered"]
 [connection signal="time_up" from="UILayer/IncidentTimer" to="." method="_on_incident_timer_time_up"]
