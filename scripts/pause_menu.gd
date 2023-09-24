@@ -9,9 +9,13 @@ func _ready() -> void:
 	quit_button.pressed.connect(get_tree().quit)
 	
 func unpause():
+	play_button.disabled = true
+	quit_button.disabled = true
 	animator.play("Unpause")
 	get_tree().paused = false
 	
 func pause():
+	play_button.disabled = false
+	quit_button.disabled = false
 	animator.play("Pause")
 	get_tree().paused = true

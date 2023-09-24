@@ -7,6 +7,7 @@ extends Node2D
 const SCREEN_WIDTH = 1920
 const SCREEN_HEIGHT = 1080
 
+var no_pause = false
 var current_item = ""
 
 # Called when the node enters the scene tree for the first time.
@@ -53,6 +54,15 @@ func _process(delta):
 			environment_obj.get_node("OnLayer").z_index = -1
 		if real_y >= $Player.position.y + 130:
 			environment_obj.get_node("OnLayer").z_index = 1
+	
+	# Pausing
+	if Input.is_action_just_pressed("pause") and not(no_pause):
+		if ($UILayer/PauseMenu.visible):
+			$UILayer/PauseMenu.unpause()
+			$UILayer/PauseMenu.visible = false
+		else:
+			$UILayer/PauseMenu.pause()
+			$UILayer/PauseMenu.visible = true
 
 func reset():
 	$Scroll.position = Vector2(-960, -2700)
@@ -144,11 +154,13 @@ func on_item_pickup(id):
 	current_item = id
 
 func freeze():
+	no_pause = true
 	$Player.frozen = true
 	for npc in $Scroll/NPCs.get_children():
 		npc.frozen = true
 
 func unfreeze():
+	no_pause = false
 	$Player.frozen = false
 	for npc in $Scroll/NPCs.get_children():
 		npc.frozen = false
