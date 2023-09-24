@@ -13,5 +13,7 @@ var interact_type = "dialogue"
 @export_category("Dialogue Settings")
 @export var upper_filepath: String = ""
 @export var lower_filepath: String = ""
+@export_enum("conversation", "item_pickup") var type: String = "conversation"
+@export var id: String = ""
 @export var show_lower: bool = false
 @export_enum("back_and_forth") var behav: String = "back_and_forth"

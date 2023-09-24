@@ -20,6 +20,7 @@ script = ExtResource("1_lt8ib")
 [node name="NPCFollow" type="PathFollow2D" parent="."]
 position = Vector2(2027, 3681)
 rotation = 3.14159
+rotates = false
 
 [node name="NPC" type="CharacterBody2D" parent="NPCFollow"]
 collision_layer = 0
