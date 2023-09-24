@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://dk2qsktna2xdr"]
+[gd_scene load_steps=39 format=3 uid="uid://dk2qsktna2xdr"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_tjtwd"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_ovl6i"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://bkov2m3iahtpv" path="res://scenes/world_objects/bench.tscn" id="10_xr8fr"]
 [ext_resource type="Texture2D" uid="uid://lwb7wt5i1l2k" path="res://assets/scenery/failure.png" id="13_m6c3w"]
 [ext_resource type="PackedScene" uid="uid://dq6kxu6q3tj2e" path="res://scenes/inventory.tscn" id="14_oets4"]
+[ext_resource type="Texture2D" uid="uid://btdotfqyn48we" path="res://assets/UI/AGAIN.png" id="18_s44bm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4a0i"]
 atlas = ExtResource("3_dyhc0")
@@ -210,6 +211,7 @@ script = ExtResource("1_tjtwd")
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(960, 540)
 script = ExtResource("2_ovl6i")
+speed_multiplier = 5.0
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="Player"]
 position = Vector2(-5, 0)
@@ -334,7 +336,18 @@ mouse_filter = 2
 
 [node name="IncidentTimer" parent="UILayer" instance=ExtResource("6_hrpew")]
 mouse_filter = 2
-TIME_LIMIT = 15
+
+[node name="AGAIN" type="TextureRect" parent="UILayer"]
+self_modulate = Color(1, 1, 1, 0)
+z_index = 14
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_s44bm")
+expand_mode = 3
+stretch_mode = 5
 
 [node name="Failure" type="TextureRect" parent="UILayer"]
 self_modulate = Color(1, 1, 1, 0)
@@ -406,12 +419,14 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 22
+disabled = true
 text = "Resume"
 
 [node name="QuitButton" type="Button" parent="UILayer/PauseMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 22
+disabled = true
 text = "Quit"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UILayer/PauseMenu"]

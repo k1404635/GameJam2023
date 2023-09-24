@@ -65,23 +65,33 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if active and not(typing) and Input.is_action_just_pressed("advance_dialogue"):
-		continued_dialogue.emit()
-		if (show_lower):
-			if (behavior == "back_and_forth"):
-				if (current_upper == current_lower):
-					next_upper(BASE_SPEED)
-				elif (current_upper - current_lower == 1):
-					next_lower(BASE_SPEED)
-		else:
-			next_upper(BASE_SPEED)
+		continue_dialogue()
 	elif active and Input.is_action_just_pressed("advance_dialogue"):
 		bypass_typing = true
+
+func continue_dialogue():
+	print("ADVANCING", current_lower, current_upper)
+	continued_dialogue.emit()
+	if (show_lower):
+		if (behavior == "back_and_forth"):
+			if (current_upper == current_lower):
+				next_upper(BASE_SPEED)
+			elif (current_upper - current_lower == 1):
+				next_lower(BASE_SPEED)
+		if (behavior == "back_and_forth_rev"):
+			if (current_upper == current_lower):
+				next_lower(BASE_SPEED)
+			elif (current_lower - current_upper == 1):
+				next_upper(BASE_SPEED)
+	else:
+		next_upper(BASE_SPEED)
 
 
 
 func next_upper(speed: float = 1):
 	$UpperBox/Proceed.visible = false
 	$LowerBox/Proceed.visible = false
+	$UpperBox/Text.text = ""
 	item_not_usable.emit()
 	if (current_upper < len(upper_text)):
 		type_to_box(upper_text[current_upper], $UpperBox/Text, speed)
@@ -93,6 +103,7 @@ func next_upper(speed: float = 1):
 func next_lower(speed: float = 1):
 	$UpperBox/Proceed.visible = false
 	$LowerBox/Proceed.visible = false
+	$LowerBox/Text.text = ""
 	item_not_usable.emit()
 	if (current_lower < len(lower_text)):
 		type_to_box(lower_text[current_lower], $LowerBox/Text, speed)
@@ -104,11 +115,13 @@ func next_lower(speed: float = 1):
 func override_upper(text: String, speed: float = 1):
 	$UpperBox/Proceed.visible = false
 	$LowerBox/Proceed.visible = false
+	$UpperBox/Text.text = ""
 	type_to_box(text, $UpperBox/Text, speed)
 
 func override_lower(text: String, speed: float = 1):
 	$UpperBox/Proceed.visible = false
 	$LowerBox/Proceed.visible = false
+	$LowerBox/Text.text = ""
 	type_to_box(text, $LowerBox/Text, speed)
 
 func type_to_box(text: String, label: RichTextLabel, speed: float = 1.0):
@@ -146,6 +159,7 @@ func start_dialogue(params, upper_filepath: String = "", lower_filepath: String 
 	$UpperBox/Portrait.texture = upper_texture
 	
 	current_upper = 0
+	current_lower = 0
 	
 	if (show_lower):
 		$LowerBox.visible = true
@@ -172,11 +186,14 @@ func start_dialogue(params, upper_filepath: String = "", lower_filepath: String 
 	
 	# Automatically begin 1st text
 	await get_tree().create_timer(0.85).timeout
-	next_upper(BASE_SPEED)
 	
+	continue_dialogue()
 	active = true
 
 func end_dialogue():
+	print("Finishing Up This Dialogue")
+	
+	active = false
 	if (show_lower):
 		$DialogueBoxAnimation.play("upper_and_lower_out")
 	else:
@@ -185,10 +202,13 @@ func end_dialogue():
 	$UpperBox/Text.text = ""
 	$LowerBox/Text.text = ""
 	
-	await get_tree().create_timer(1.05).timeout
+	await get_tree().create_timer(1).timeout
+	
+	current_upper = 0
+	current_lower = 0
 	
 	dialogue_finished.emit(dialogue_type, dialogue_id)
-	active = false
+	
 
 
 
@@ -220,7 +240,7 @@ func play_dialogue_file(filename: String):
 		params["behavior"] = "back_and_forth"
 		if ("settings" in dialogue_data):
 			if ("behavior" in dialogue_data["settings"]):
-				params["behavior"] = dialogue_data["behavior"]
+				params["behavior"] = dialogue_data["settings"]["behavior"]
 		
 		start_dialogue(params, upper_portrait, lower_portrait)
 		

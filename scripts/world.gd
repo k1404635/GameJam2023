@@ -9,6 +9,7 @@ extends Node2D
 const SCREEN_WIDTH = 1920
 const SCREEN_HEIGHT = 1080
 
+var no_pause = false
 var current_item = ""
 
 # Called when the node enters the scene tree for the first time.
@@ -55,6 +56,15 @@ func _process(delta):
 			environment_obj.get_node("OnLayer").z_index = -1
 		if real_y >= $Player.position.y + 130:
 			environment_obj.get_node("OnLayer").z_index = 1
+	
+	# Pausing
+	if Input.is_action_just_pressed("pause") and not(no_pause):
+		if ($UILayer/PauseMenu.visible):
+			$UILayer/PauseMenu.unpause()
+			$UILayer/PauseMenu.visible = false
+		else:
+			$UILayer/PauseMenu.pause()
+			$UILayer/PauseMenu.visible = true
 
 func reset():
 	$Scroll.position = Vector2(-960, -2700)
@@ -65,7 +75,22 @@ func reset():
 	$Player.scroll_up_limit = 540/2
 	$Player.scroll_down_limit = 540/2
 	
-	if (failed_loops > 0):
+	current_item = ""
+	
+	freeze()
+	match GLOBAL.loops:
+		0:
+			
+			$UILayer/DialogueEngine.play_dialogue_file("dialogues/intro_0_0.json")
+			await $UILayer/DialogueEngine.dialogue_finished
+			$UILayer/DialogueEngine.play_dialogue_file("dialogues/intro_0_1.json")
+			await $UILayer/DialogueEngine.dialogue_finished
+			$UILayer/DialogueEngine.play_dialogue_file("dialogues/intro_0_2.json")
+	
+	await $UILayer/DialogueEngine.dialogue_finished
+	unfreeze()
+	
+	if (GLOBAL.loops > 0):
 		await get_tree().create_timer(2).timeout
 		$UILayer/IncidentTimer.go()
 
@@ -76,9 +101,6 @@ func _on_incident_timer_time_up():
 	
 	await get_tree().create_timer(0.5).timeout
 	freeze()
-	
-	#GLOBAL.failed_loops += 1
-	failed_loops += 1
 	
 	await get_tree().create_timer(1.5).timeout
 	tween = get_tree().create_tween()
@@ -134,9 +156,16 @@ func on_item_pickup(id):
 	current_item = id
 
 func freeze():
+	no_pause = true
 	$Player.frozen = true
 	for npc in $Scroll/NPCs.get_children():
 		npc.frozen = true
+
+func unfreeze():
+	no_pause = false
+	$Player.frozen = false
+	for npc in $Scroll/NPCs.get_children():
+		npc.frozen = false
 
 
 
@@ -159,8 +188,27 @@ func _on_inventory_item_used():
 	# Sanity Check
 	if $UILayer/DialogueEngine.active:
 		if (current_item == "gun"):
-			$UILayer/DialogueEngine.override_upper("I'm sorry I had to do this.", 0.75)
+			$UILayer/DialogueEngine.override_upper("I'm sorry I had to do this.", 1)
 			await $UILayer/DialogueEngine.continued_dialogue
 			
 			# BANG
 			$UILayer/ColorOverlay.color = Color("#000000ff")
+			
+			GLOBAL.loops += 1
+			$UILayer/DialogueEngine.end_dialogue()
+			$UILayer/Inventory.discard_items()
+			
+			await get_tree().create_timer(3).timeout
+			
+			print("AGAIN")
+			$UILayer/AGAIN.self_modulate = Color("#ffffffff")
+			
+			var tween = get_tree().create_tween()
+			tween.tween_property($UILayer/AGAIN, "self_modulate", Color(1, 1, 1, 0), 1.0)
+			
+			await get_tree().create_timer(2).timeout
+			
+			reset()
+			
+			tween = get_tree().create_tween()
+			tween.tween_property($UILayer/ColorOverlay, "color", Color(0, 0, 0, 0), 1.0)

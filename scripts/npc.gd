@@ -1,5 +1,7 @@
 class_name NPC extends Path2D
 
+@onready var GLOBAL = get_node("/root/Global")
+
 @export_category("Appearance")
 @export var sprite: Texture2D
 @export var sprite_down_point: float = 50
@@ -31,7 +33,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if not(in_dialogue) and not(frozen):
+	if not(in_dialogue) and not(frozen) and GLOBAL.loops > 0:
 		travel(delta)
 
 
