@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/npc.gd" id="1_lt8ib"]
 [ext_resource type="Texture2D" uid="uid://dd1clyiyrw5hh" path="res://assets/characters/TEMP_2.png" id="2_y4bil"]
+[ext_resource type="Script" path="res://scripts/Interactive/interact_area.gd" id="3_ghx2a"]
 
 [sub_resource type="Curve2D" id="Curve2D_6jeop"]
 _data = {
@@ -12,16 +13,9 @@ point_count = 12
 [sub_resource type="CircleShape2D" id="CircleShape2D_4bnj0"]
 radius = 50.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pgyqr"]
-radius = 100.0
-
 [node name="NPCPath" type="Path2D"]
 curve = SubResource("Curve2D_6jeop")
 script = ExtResource("1_lt8ib")
-dialogue_id = null
-pause_points = null
-travel_speed = null
-pause_duration = null
 
 [node name="NPCFollow" type="PathFollow2D" parent="."]
 position = Vector2(2027, 3681)
@@ -34,12 +28,9 @@ collision_mask = 0
 [node name="NPCSprite" type="Sprite2D" parent="NPCFollow/NPC"]
 texture = ExtResource("2_y4bil")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NPCFollow/NPC"]
+[node name="Interactable" type="Area2D" parent="NPCFollow"]
+script = ExtResource("3_ghx2a")
+interact_label = "Press E to talk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPCFollow/Interactable"]
 shape = SubResource("CircleShape2D_4bnj0")
-
-[node name="DialogueTrigger" type="Area2D" parent="NPCFollow"]
-
-[node name="DialogueCollision" type="CollisionShape2D" parent="NPCFollow/DialogueTrigger"]
-shape = SubResource("CircleShape2D_pgyqr")
-
-[connection signal="body_entered" from="NPCFollow/DialogueTrigger" to="." method="_on_dialogue_trigger_body_entered"]

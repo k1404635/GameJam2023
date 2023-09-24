@@ -39,6 +39,8 @@ var current_lower = 0
 
 @export var BASE_SPEED = 2
 
+signal dialogue_finished
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# TEST CODE
@@ -152,9 +154,13 @@ func end_dialogue():
 		$DialogueBoxAnimation.play("upper_and_lower_out")
 	else:
 		$DialogueBoxAnimation.play("upper_out")
+		
+	$UpperBox/Text.text = ""
+	$LowerBox/Text.text = ""
 	
 	await get_tree().create_timer(1.05).timeout
 	
+	dialogue_finished.emit()
 	active = false
 
 
