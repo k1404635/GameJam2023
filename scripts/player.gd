@@ -70,7 +70,6 @@ func _physics_process(delta):
 	
 # Up POSSIBLE only if y < scroll_y_limit
 
-
 # Interaction methods
 
 func on_interaction_area_entered(area):

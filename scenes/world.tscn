@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://c4mxg6pn32x0l" path="res://scenes/dialogue_engine.tscn" id="5_3u4qo"]
 [ext_resource type="Texture2D" uid="uid://k7w3slxt6w61" path="res://assets/scenery/MAP_SCALE.png" id="5_pcg2h"]
 [ext_resource type="PackedScene" uid="uid://bb46uky5tiqcy" path="res://scenes/incident_timer.tscn" id="6_hrpew"]
+[ext_resource type="Shader" path="res://blur.gdshader" id="7_17qm0"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="8_82ubd"]
 [ext_resource type="Texture2D" uid="uid://di6fkotm1iaqp" path="res://assets/items/gun.png" id="7_hv87u"]
 [ext_resource type="PackedScene" uid="uid://fh58stjs87b" path="res://scenes/npc.tscn" id="8_2d66c"]
 [ext_resource type="PackedScene" uid="uid://r2g5rk1q14p6" path="res://scenes/world_objects/pickup_item.tscn" id="8_yaklc"]
@@ -105,6 +107,103 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 3340, 4086, 0, 0, 0, 0, 2973, 3228, -76.2813, 398.358, 76.2813, -398.358, 3349, 2415, 79.37, 176.202, -79.37, -176.202, 3371, 1383, 125.405, -95.2441, -125.405, 95.2441, 2938, 1369, 141.111, -131.032, -141.111, 131.032, 2330, 2366, 483.81, -25.1984, -483.81, 25.1984, 1478, 2661, 206.627, -27.7183, -206.627, 27.7183, 704, 2162, 12.5992, -425.853, -12.5992, 425.853, 397, 2835, -339.028, -139.849, 339.028, 139.849, 792, 3939, -449.212, 199.179, 449.212, -199.179, 1975, 4002, 0, 0, 0, 0, 2971, 3228, 0, 0, 0, 0, 3340, 4086)
 }
 point_count = 13
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_byaf0"]
+shader = ExtResource("7_17qm0")
+shader_parameter/brightness = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_brhpj"]
+bg_color = Color(0.686275, 0.690196, 0.717647, 1)
+
+[sub_resource type="Animation" id="Animation_n3ah7"]
+resource_name = "Unpause"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/brightness")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.5),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.5),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1i4ka"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/brightness")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_10j2m"]
+resource_name = "Pause"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/brightness")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [1.0, 0.7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gnjgk"]
+_data = {
+"Pause": SubResource("Animation_10j2m"),
+"RESET": SubResource("Animation_1i4ka"),
+"Unpause": SubResource("Animation_n3ah7")
+}
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_tjtwd")
@@ -272,6 +371,69 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.0901961, 0.113725, 0.160784, 0)
 
+[node name="PauseMenu" type="ColorRect" parent="UILayer" groups=["Pause"]]
+process_mode = 3
+material = SubResource("ShaderMaterial_byaf0")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+script = ExtResource("8_82ubd")
+
+[node name="CenterContainer" type="CenterContainer" parent="UILayer/PauseMenu"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/PauseMenu/CenterContainer"]
+custom_minimum_size = Vector2(512, 256)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_brhpj")
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/PauseMenu/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/PauseMenu/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UILayer/PauseMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Pause"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UILayer/PauseMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="UILayer/PauseMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 22
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="UILayer/PauseMenu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 22
+text = "Quit"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UILayer/PauseMenu"]
+autoplay = "Unpause"
+libraries = {
+"": SubResource("AnimationLibrary_gnjgk")
+}
+
+[connection signal="area_entered" from="Scroll/Items/SampleInteractive" to="." method="_on_sample_interactive_area_entered"]
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="item_used" from="UILayer/Inventory" to="." method="_on_inventory_item_used"]
