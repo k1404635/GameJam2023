@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.1", "GL Compatibility")
 boot_splash/bg_color=Color(0.0862745, 0.0901961, 0.101961, 1)
 boot_splash/show_image=false
 
+[autoload]
+
+Global="*res://scripts/GLOBAL.gd"
+
 [display]
 
 window/size/viewport_width=1920

@@ -1,8 +1,6 @@
 extends Node2D
 
 @onready var GLOBAL = get_node("/root/Global")
-@onready var failed_loops = 0
-@onready var loops = 0
 
 @export var PLAYER_VELOCITY = 10
 
