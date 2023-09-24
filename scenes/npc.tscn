@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://fh58stjs87b"]
+
+[ext_resource type="Script" path="res://scripts/npc.gd" id="1_lt8ib"]
+[ext_resource type="Texture2D" uid="uid://dd1clyiyrw5hh" path="res://assets/characters/TEMP_2.png" id="2_y4bil"]
+
+[sub_resource type="Curve2D" id="Curve2D_6jeop"]
+_data = {
+"points": PackedVector2Array(0, 0, -1100, 0, 2027, 3681, 0, 0, 0, -300, 930, 2783, 188.572, 24.1835, -188.572, -24.1835, 1326, 2151, 26.4285, 169.897, -26.4285, -169.897, 565, 1425, -143.837, 113.871, 143.837, -113.871, 656, 303, -449.492, -50.9424, 449.492, 50.9424, 2134, 165, -134.848, -200.773, 134.848, 200.773, 3051, 695, 11.9865, -164.814, -11.9865, 164.814, 3275, 1448, 77.912, -35.9594, -77.912, 35.9594, 3164, 1864, 626.292, -101.885, -626.292, 101.885, 1729, 2026, 116.866, -375.972, -116.866, 800, 928, 2781, 0, 0, 0, 0, 2027, 3681)
+}
+point_count = 12
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4bnj0"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pgyqr"]
+radius = 100.0
+
+[node name="NPCPath" type="Path2D"]
+curve = SubResource("Curve2D_6jeop")
+script = ExtResource("1_lt8ib")
+dialogue_id = null
+pause_points = null
+travel_speed = null
+pause_duration = null
+
+[node name="NPCFollow" type="PathFollow2D" parent="."]
+position = Vector2(2027, 3681)
+rotation = 3.14159
+
+[node name="NPC" type="CharacterBody2D" parent="NPCFollow"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="NPCSprite" type="Sprite2D" parent="NPCFollow/NPC"]
+texture = ExtResource("2_y4bil")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPCFollow/NPC"]
+shape = SubResource("CircleShape2D_4bnj0")
+
+[node name="DialogueTrigger" type="Area2D" parent="NPCFollow"]
+
+[node name="DialogueCollision" type="CollisionShape2D" parent="NPCFollow/DialogueTrigger"]
+shape = SubResource("CircleShape2D_pgyqr")
+
+[connection signal="body_entered" from="NPCFollow/DialogueTrigger" to="." method="_on_dialogue_trigger_body_entered"]

@@ -1,0 +1,11 @@
+{
+	"portraits": {
+		"upper": "assets/characters/TEMP.png"
+	},
+
+	"upper": [
+		"Loading from a JSON File??",
+		"You stink!",
+		"Boooooooo!!!!!!!!"
+	]
+}
