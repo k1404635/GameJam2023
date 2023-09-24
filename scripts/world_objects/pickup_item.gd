@@ -24,4 +24,4 @@ func on_dialogue_finished(type, id):
 	if (type == "item_pickup"):
 		if (id == pickup_name):
 			picked_up.emit(id)
-			visible = false
+			queue_free()

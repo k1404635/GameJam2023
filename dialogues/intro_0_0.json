@@ -1,0 +1,10 @@
+{
+	"portraits": {
+		"upper": "assets/characters/player_portrait.png"
+	},
+
+	"upper": [
+		"That girl, do I know her? She looks very familiar.",
+		"Ah, she probably lives in the neighborhood."
+	]
+}

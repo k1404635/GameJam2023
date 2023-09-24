@@ -1,0 +1,20 @@
+{
+	"settings": {
+		"behavior": "back_and_forth_rev"
+	},
+
+	"portraits": {
+		"upper": "assets/characters/player_portrait.png",
+		"lower": "assets/characters/girl_portrait.png"
+	},
+
+	"upper": [
+		"(I should take shorter naps.)",
+		"Hi Ida, I'm......",
+	],
+
+	"lower": [
+		"Hi Mister!",
+		"What's your name? I'm Ida."
+	]
+}
