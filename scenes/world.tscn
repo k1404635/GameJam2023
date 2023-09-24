@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dk2qsktna2xdr"]
+[gd_scene load_steps=38 format=3 uid="uid://dk2qsktna2xdr"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_tjtwd"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_ovl6i"]
@@ -8,9 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://k7w3slxt6w61" path="res://assets/scenery/MAP_SCALE.png" id="5_pcg2h"]
 [ext_resource type="PackedScene" uid="uid://bb46uky5tiqcy" path="res://scenes/incident_timer.tscn" id="6_hrpew"]
 [ext_resource type="Shader" path="res://blur.gdshader" id="7_17qm0"]
-[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="8_82ubd"]
 [ext_resource type="Texture2D" uid="uid://di6fkotm1iaqp" path="res://assets/items/gun.png" id="7_hv87u"]
 [ext_resource type="PackedScene" uid="uid://fh58stjs87b" path="res://scenes/npc.tscn" id="8_2d66c"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="8_82ubd"]
 [ext_resource type="PackedScene" uid="uid://r2g5rk1q14p6" path="res://scenes/world_objects/pickup_item.tscn" id="8_yaklc"]
 [ext_resource type="PackedScene" uid="uid://ckxmxpdruivln" path="res://scenes/world_objects/tree.tscn" id="9_aiftc"]
 [ext_resource type="Texture2D" uid="uid://0stdwnp6slpj" path="res://assets/characters/shopkeeper.png" id="9_eliyb"]
@@ -420,7 +420,6 @@ libraries = {
 "": SubResource("AnimationLibrary_gnjgk")
 }
 
-[connection signal="area_entered" from="Scroll/Items/SampleInteractive" to="." method="_on_sample_interactive_area_entered"]
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="item_used" from="UILayer/Inventory" to="." method="_on_inventory_item_used"]

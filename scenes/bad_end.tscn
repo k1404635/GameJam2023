@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxnxucojyu6jw"]
+
+[ext_resource type="Script" path="res://scripts/bad_end.gd" id="1_p4n0i"]
+[ext_resource type="Texture2D" uid="uid://b4pxbrw8n53dc" path="res://assets/scenery/bad_end.png" id="2_agve4"]
+
+[node name="bad_end" type="Node2D"]
+script = ExtResource("1_p4n0i")
+
+[node name="FadeIn" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_agve4")
+
+[node name="PlayAgain" type="TextureButton" parent="."]
+offset_left = 276.0
+offset_top = 784.0
+offset_right = 316.0
+offset_bottom = 824.0
+
+[connection signal="pressed" from="PlayAgain" to="." method="_on_play_again_pressed"]
