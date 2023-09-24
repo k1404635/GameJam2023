@@ -25,3 +25,4 @@ func on_dialogue_finished(type, id):
 		if (id == pickup_name):
 			picked_up.emit(id)
 			visible = false
+			

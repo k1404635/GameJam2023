@@ -1,6 +1,8 @@
 extends Node2D
 
 @onready var GLOBAL = get_node("/root/Global")
+@onready var failed_loops = 0
+@onready var loops = 0
 
 @export var PLAYER_VELOCITY = 10
 
@@ -63,7 +65,7 @@ func reset():
 	$Player.scroll_up_limit = 540/2
 	$Player.scroll_down_limit = 540/2
 	
-	if (GLOBAL.failed_loops > 0):
+	if (failed_loops > 0):
 		await get_tree().create_timer(2).timeout
 		$UILayer/IncidentTimer.go()
 
@@ -75,7 +77,8 @@ func _on_incident_timer_time_up():
 	await get_tree().create_timer(0.5).timeout
 	freeze()
 	
-	GLOBAL.failed_loops += 1
+	#GLOBAL.failed_loops += 1
+	failed_loops += 1
 	
 	await get_tree().create_timer(1.5).timeout
 	tween = get_tree().create_tween()

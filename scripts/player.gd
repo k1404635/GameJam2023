@@ -25,6 +25,8 @@ func _process(delta):
 		execute_interactions()
 	if (interaction_timeout > 0):
 		interaction_timeout -= 1
+	if Input.is_action_just_pressed("ui_cancel"):
+		get_tree().call_group("Pause", "pause")
 
 func _physics_process(delta):
 	
