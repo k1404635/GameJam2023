@@ -1,16 +1,24 @@
-[gd_scene load_steps=22 format=3 uid="uid://dk2qsktna2xdr"]
+[gd_scene load_steps=30 format=3 uid="uid://dk2qsktna2xdr"]
 
-[ext_resource type="Texture2D" uid="uid://dfmqmlgp801yd" path="res://assets/scenery/PARK_LB.png" id="1_d27d8"]
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_tjtwd"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_ovl6i"]
 [ext_resource type="Texture2D" uid="uid://caeolyfmyy8aa" path="res://assets/characters/player_spritesheet_ref.png" id="3_dyhc0"]
-[ext_resource type="FontFile" uid="uid://dltdgwcyvk5uo" path="res://assets/font/normal_400.ttf" id="4_0xifn"]
+[ext_resource type="FontFile" uid="uid://cf3twlhcqippa" path="res://assets/font/normal_700.ttf" id="4_ddeco"]
 [ext_resource type="PackedScene" uid="uid://c4mxg6pn32x0l" path="res://scenes/dialogue_engine.tscn" id="5_3u4qo"]
-[ext_resource type="Script" path="res://scripts/Interactive/interact_area.gd" id="5_o5vtb"]
-[ext_resource type="Texture2D" uid="uid://dd1clyiyrw5hh" path="res://assets/characters/TEMP_2.png" id="6_hbwyn"]
+[ext_resource type="Texture2D" uid="uid://k7w3slxt6w61" path="res://assets/scenery/MAP_SCALE.png" id="5_pcg2h"]
 [ext_resource type="PackedScene" uid="uid://bb46uky5tiqcy" path="res://scenes/incident_timer.tscn" id="6_hrpew"]
 [ext_resource type="Shader" path="res://blur.gdshader" id="7_17qm0"]
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="8_82ubd"]
+[ext_resource type="Texture2D" uid="uid://di6fkotm1iaqp" path="res://assets/items/gun.png" id="7_hv87u"]
+[ext_resource type="PackedScene" uid="uid://fh58stjs87b" path="res://scenes/npc.tscn" id="8_2d66c"]
+[ext_resource type="PackedScene" uid="uid://r2g5rk1q14p6" path="res://scenes/world_objects/pickup_item.tscn" id="8_yaklc"]
+[ext_resource type="PackedScene" uid="uid://ckxmxpdruivln" path="res://scenes/world_objects/tree.tscn" id="9_aiftc"]
+[ext_resource type="Texture2D" uid="uid://0stdwnp6slpj" path="res://assets/characters/shopkeeper.png" id="9_eliyb"]
+[ext_resource type="Texture2D" uid="uid://c426qhagoo3r8" path="res://assets/characters/single.png" id="9_m48kb"]
+[ext_resource type="Texture2D" uid="uid://d4lgt1ibaaa5a" path="res://assets/characters/criminal.png" id="10_mya5j"]
+[ext_resource type="PackedScene" uid="uid://bkov2m3iahtpv" path="res://scenes/world_objects/bench.tscn" id="10_xr8fr"]
+[ext_resource type="Texture2D" uid="uid://lwb7wt5i1l2k" path="res://assets/scenery/failure.png" id="13_m6c3w"]
+[ext_resource type="PackedScene" uid="uid://dq6kxu6q3tj2e" path="res://scenes/inventory.tscn" id="14_oets4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4a0i"]
 atlas = ExtResource("3_dyhc0")
@@ -63,11 +71,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ss2b"]
-size = Vector2(90, 40)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_58xt1"]
+radius = 15.0
+height = 75.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_n5ibv"]
-font = ExtResource("4_0xifn")
+font = ExtResource("4_ddeco")
 font_size = 24
 font_color = Color(0.94902, 0.964706, 1, 1)
 outline_size = 4
@@ -76,14 +85,27 @@ outline_color = Color(0.0862745, 0.0901961, 0.101961, 1)
 [sub_resource type="CircleShape2D" id="CircleShape2D_xol0p"]
 radius = 150.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxiwo"]
-size = Vector2(100, 100)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vfmga"]
+radius = 40.0
+height = 260.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_gtaao"]
-radius = 25.0
+[sub_resource type="Curve2D" id="Curve2D_rp2uf"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1971, 4020, 271.836, 120.816, -271.836, -120.816, 904, 3888, 0, 560.633, 0, -560.633, 443, 2880, -79.2854, 241.632, 79.2854, -241.632, 677, 2159, -16.9514, 355.98, 16.9514, -355.98, 708, 1502, -199.179, 190.703, 199.179, -190.703, 1013, 752, -406.834, 42.3785, 406.834, -42.3785, 1950, 303, -203.417, -194.941, 203.417, 194.941, 2963, 493, 42.3785, -190.703, -42.3785, 190.703, 3331, 1116, 218.979, -215.203, -218.979, 215.203, 2886, 1472, 0, 0, 0, 0, 2459, 2197, 517.243, -18.8775, -517.243, 18.8775, 1617, 2699, 234.081, -3.7755, -234.081, 3.7755, 824, 2307, -7.55099, -449.284, 7.55099, 449.284, 428, 2869, -280.183, -64.4272, 280.183, 64.4272, 904, 3885, 0, 0, 0, 0, 1971, 4020)
+}
+point_count = 16
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sw6p0"]
-size = Vector2(1720, 20)
+[sub_resource type="Curve2D" id="Curve2D_h5p6p"]
+_data = {
+"points": PackedVector2Array(-504, 168, 504, -168, 1551, 398, -340.179, -123.472, 340.179, 123.472, 2798, 382, -68.0357, -274.663, 68.0357, 274.663, 3343, 1082, 132.142, -536.121, -132.142, 536.121, 3351, 2364, 196.326, -203.877, -196.326, 203.877, 2759, 3458, 464.386, -45.306, -464.386, 45.306, 1788, 4070, 286.938, 268.06, -286.938, -268.06, 750, 3836, 3.7755, 358.672, -3.7755, -358.672, 429, 2817, -67.9589, 226.53, 67.9589, -226.53, 652, 2156, -98.2738, 352.778, 98.2738, -352.778, 846, 1014, 0, 0, 0, 0, 1550, 398)
+}
+point_count = 11
+
+[sub_resource type="Curve2D" id="Curve2D_25bm0"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 3340, 4086, 0, 0, 0, 0, 2973, 3228, -76.2813, 398.358, 76.2813, -398.358, 3349, 2415, 79.37, 176.202, -79.37, -176.202, 3371, 1383, 125.405, -95.2441, -125.405, 95.2441, 2938, 1369, 141.111, -131.032, -141.111, 131.032, 2330, 2366, 483.81, -25.1984, -483.81, 25.1984, 1478, 2661, 206.627, -27.7183, -206.627, 27.7183, 704, 2162, 12.5992, -425.853, -12.5992, 425.853, 397, 2835, -339.028, -139.849, 339.028, 139.849, 792, 3939, -449.212, 199.179, 449.212, -199.179, 1975, 4002, 0, 0, 0, 0, 2971, 3228, 0, 0, 0, 0, 3340, 4086)
+}
+point_count = 13
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_byaf0"]
 shader = ExtResource("7_17qm0")
@@ -196,8 +218,9 @@ sprite_frames = SubResource("SpriteFrames_j1qbv")
 animation = &"forward"
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="Player"]
-position = Vector2(0, 115)
-shape = SubResource("RectangleShape2D_2ss2b")
+position = Vector2(0, 120)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_58xt1")
 
 [node name="IndicatorLabel" type="Label" parent="Player"]
 anchors_preset = 8
@@ -219,75 +242,120 @@ horizontal_alignment = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/PlayerInteraction"]
 shape = SubResource("CircleShape2D_xol0p")
 
+[node name="PlayerBox" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/PlayerBox"]
+shape = SubResource("CapsuleShape2D_vfmga")
+
 [node name="Scroll" type="Node2D" parent="."]
 
 [node name="Back" type="Sprite2D" parent="Scroll"]
 z_index = -3
-texture = ExtResource("1_d27d8")
+scale = Vector2(2, 2)
+texture = ExtResource("5_pcg2h")
 centered = false
 
 [node name="Items" type="Node2D" parent="Scroll"]
 
-[node name="SampleInteractive" type="Area2D" parent="Scroll/Items"]
-position = Vector2(1920, 2160)
-script = ExtResource("5_o5vtb")
-upper_text = Array[String](["Hi?", "Sorry..."])
-lower_text = Array[String](["Who are you talking to!"])
-upper_filepath = "assets/characters/player_portrait.png"
-lower_filepath = "assets/characters/TEMP_2.png"
-show_lower = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scroll/Items/SampleInteractive"]
-shape = SubResource("RectangleShape2D_fxiwo")
-
-[node name="SampleSprite" type="Sprite2D" parent="Scroll/Items/SampleInteractive"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("6_hbwyn")
-
-[node name="Collision" type="StaticBody2D" parent="Scroll/Items/SampleInteractive"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scroll/Items/SampleInteractive/Collision"]
-shape = SubResource("CircleShape2D_gtaao")
+[node name="PickupItem" parent="Scroll/Items" instance=ExtResource("8_yaklc")]
+position = Vector2(3540, 300)
+sprite = ExtResource("7_hv87u")
+pickup_quip = "This might be necessary."
+pickup_name = "gun"
 
 [node name="NPCs" type="Node2D" parent="Scroll"]
 
 [node name="NPCPath" parent="Scroll/NPCs" instance=ExtResource("8_2d66c")]
-dialogue_file = "dialogues/TEST2.json"
-pause_points = Array[float]([0.18, 0.5, 0.67])
-pause_duration = 5
+curve = SubResource("Curve2D_rp2uf")
+sprite = ExtResource("9_m48kb")
+sprite_down_point = 130.0
+dialogue_file = "dialogues/single_1.json"
+pause_points = Array[float]([0.2])
+
+[node name="NPCPath2" parent="Scroll/NPCs" instance=ExtResource("8_2d66c")]
+curve = SubResource("Curve2D_h5p6p")
+sprite = ExtResource("9_eliyb")
+sprite_down_point = 140.0
+dialogue_file = "dialogues/shopkeeper_1.json"
+
+[node name="NPCPath3" parent="Scroll/NPCs" instance=ExtResource("8_2d66c")]
+curve = SubResource("Curve2D_25bm0")
+sprite = ExtResource("10_mya5j")
+sprite_down_point = 130.0
+dialogue_file = "dialogues/criminal_1.json"
 
 [node name="Collisions" type="Node2D" parent="Scroll"]
 
 [node name="Lake" type="StaticBody2D" parent="Scroll/Collisions"]
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Scroll/Collisions/Lake"]
-polygon = PackedVector2Array(1411, 374, 1614, 405, 1995, 503, 2224, 505, 2389, 498, 2538, 553, 2815, 795, 2855, 933, 2776, 1082, 2498, 1266, 2330, 1373, 2189, 1597, 2061, 1696, 1879, 1725, 1642, 1696, 1452, 1594, 1359, 1458, 1343, 1261, 1367, 1055, 1340, 850, 1292, 655, 1273, 484, 1329, 393)
+polygon = PackedVector2Array(2029, 884, 2195, 797, 2358, 729, 2504, 767, 2587, 860, 2640, 979, 2623, 1142, 2561, 1278, 2417, 1453, 2243, 1521, 2027, 1576, 1803, 1689, 1593, 1896, 1413, 2015, 1237, 1992, 1101, 1943, 1086, 1754, 1042, 1600, 1057, 1439, 1059, 1299, 1144, 1104, 1250, 994, 1404, 888, 1578, 866, 1737, 875, 1881, 911)
 
-[node name="GateA" type="StaticBody2D" parent="Scroll/Collisions"]
+[node name="Environment" type="Node2D" parent="Scroll"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scroll/Collisions/GateA"]
-position = Vector2(860, 4090)
-shape = SubResource("RectangleShape2D_sw6p0")
+[node name="Bench" parent="Scroll/Environment" instance=ExtResource("10_xr8fr")]
+position = Vector2(1920, 3245)
 
-[node name="GateB" type="StaticBody2D" parent="Scroll/Collisions"]
+[node name="Tree" parent="Scroll/Environment" instance=ExtResource("9_aiftc")]
+position = Vector2(2718, 2406)
+flip = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scroll/Collisions/GateB"]
-position = Vector2(2980, 4090)
-shape = SubResource("RectangleShape2D_sw6p0")
+[node name="Tree2" parent="Scroll/Environment" instance=ExtResource("9_aiftc")]
+position = Vector2(799, 2354)
+
+[node name="Tree3" parent="Scroll/Environment" instance=ExtResource("9_aiftc")]
+position = Vector2(3050, 1459)
+
+[node name="Tree4" parent="Scroll/Environment" instance=ExtResource("9_aiftc")]
+position = Vector2(3431, 416)
+flip = true
+
+[node name="Tree5" parent="Scroll/Environment" instance=ExtResource("9_aiftc")]
+position = Vector2(1239, 3219)
+flip = true
+
+[node name="Tree6" parent="Scroll/Environment" instance=ExtResource("9_aiftc")]
+position = Vector2(493, 627)
+flip = true
+
+[node name="Tree7" parent="Scroll/Environment" instance=ExtResource("9_aiftc")]
+position = Vector2(2827, 3732)
+
+[node name="Tree8" parent="Scroll/Environment" instance=ExtResource("9_aiftc")]
+position = Vector2(585, 4015)
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
+[node name="Inventory" parent="UILayer" instance=ExtResource("14_oets4")]
+mouse_default_cursor_shape = 2
+
 [node name="DialogueEngine" parent="UILayer" instance=ExtResource("5_3u4qo")]
+mouse_filter = 2
 
 [node name="IncidentTimer" parent="UILayer" instance=ExtResource("6_hrpew")]
+mouse_filter = 2
+TIME_LIMIT = 15
 
-[node name="Bleak" type="ColorRect" parent="UILayer"]
+[node name="Failure" type="TextureRect" parent="UILayer"]
+self_modulate = Color(1, 1, 1, 0)
+z_index = 11
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_m6c3w")
+stretch_mode = 6
+
+[node name="ColorOverlay" type="ColorRect" parent="UILayer"]
 z_index = 10
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.0901961, 0.113725, 0.160784, 0)
 
 [node name="PauseMenu" type="ColorRect" parent="UILayer" groups=["Pause"]]
@@ -353,4 +421,10 @@ libraries = {
 }
 
 [connection signal="area_entered" from="Scroll/Items/SampleInteractive" to="." method="_on_sample_interactive_area_entered"]
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="item_used" from="UILayer/Inventory" to="." method="_on_inventory_item_used"]
+[connection signal="dialogue_finished" from="UILayer/DialogueEngine" to="." method="_on_dialogue_engine_dialogue_finished"]
+[connection signal="item_not_usable" from="UILayer/DialogueEngine" to="." method="_on_dialogue_engine_item_not_usable"]
+[connection signal="item_usable" from="UILayer/DialogueEngine" to="." method="_on_dialogue_engine_item_usable"]
 [connection signal="time_up" from="UILayer/IncidentTimer" to="." method="_on_incident_timer_time_up"]

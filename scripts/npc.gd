@@ -1,5 +1,9 @@
 class_name NPC extends Path2D
 
+@export_category("Appearance")
+@export var sprite: Texture2D
+@export var sprite_down_point: float = 50
+
 @export_category("Dialogue")
 @export var dialogue_file: String
 
@@ -7,23 +11,27 @@ class_name NPC extends Path2D
 @export var pause_points: Array[float]
 
 # Travel speed: progress per second
-@export var travel_speed = 0.01
+@export var travel_speed: float = 0.01
 
 # Pause Duration: How long at each pause
-@export var pause_duration = 10
+@export var pause_duration: float = 10
 
 var in_dialogue = false
+var frozen = false
 
 var paused = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$NPCFollow/Interactable.dialogue_file = dialogue_file
+	if (sprite != null):
+		$NPCFollow/NPC/NPCSprite.texture = sprite
+		$NPCFollow/NPC/NPCSprite.scale = Vector2(0.5, -0.5)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if not(in_dialogue):
+	if not(in_dialogue) and not(frozen):
 		travel(delta)
 
 

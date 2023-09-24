@@ -1,0 +1,18 @@
+{
+	"portraits": {
+		"upper": "assets/characters/player_portrait.png",
+		"lower": "assets/characters/criminal_portrait.png"
+	},
+
+	"upper": [
+		"Hey........",
+		"Okay... Well anyways, have you seen anything weird lately?",
+		"Does anything feel off about the park?",
+	],
+
+	"lower": [
+		"What? Oh the scar. Ignore it.",
+		"Aside from you? No. I'm just wandering around the park right now.",
+		"No, not really. I've been looking around for a while and I haven't seen anything... suspicious."
+	]
+}

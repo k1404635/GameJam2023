@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://drrsvmpu2gm3k"]
+[gd_scene load_steps=7 format=3 uid="uid://drrsvmpu2gm3k"]
 
 [ext_resource type="Texture2D" uid="uid://dyniik817lmm5" path="res://assets/scenery/title_screen_bg.png" id="1_pn124"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_xna0e"]
 [ext_resource type="FontFile" uid="uid://cf3twlhcqippa" path="res://assets/font/normal_700.ttf" id="2_cga3u"]
 [ext_resource type="Texture2D" uid="uid://bxn07s8funtxt" path="res://assets/UI/play_button.png" id="4_hg4d1"]
 [ext_resource type="Texture2D" uid="uid://bxdcq213f4uc7" path="res://assets/UI/play_button_pressed.png" id="5_rs2cn"]
+[ext_resource type="AudioStream" uid="uid://dvoafao21akf2" path="res://assets/audio/menu_loop.mp3" id="6_ry2nh"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -67,5 +68,10 @@ grow_horizontal = 0
 grow_vertical = 0
 texture_normal = ExtResource("4_hg4d1")
 texture_pressed = ExtResource("5_rs2cn")
+
+[node name="MenuLoop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_ry2nh")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]

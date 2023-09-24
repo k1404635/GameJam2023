@@ -1,5 +1,4 @@
 # Godot 4+ specific ignores
 .godot/
 assets/MOCKUP/
-*.godot
-project.godot
+assets/characters/RAW_AND_TEMP/

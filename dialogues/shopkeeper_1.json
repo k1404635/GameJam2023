@@ -1,0 +1,19 @@
+{
+	"portraits": {
+		"upper": "assets/characters/player_portrait.png",
+		"lower": "assets/characters/shopkeeper_portrait.png"
+	},
+
+	"upper": [
+		"Hello there.",
+		"I'm... honestly not sure. I just feel like something's off here. Do you feel anything different about today?",
+		"Okay, but is there really nothing wrong? I mean I just saw this girl come by and...",
+		"...fine."
+	],
+
+	"lower": [
+		"What do you want.",
+		"I'm too busy to care. I have plenty of business to take care of and I need to maximize the efficiency of my break.",
+		"Go away before I do something about you."
+	]
+}

@@ -1,9 +1,13 @@
 extends Node2D
 
+@onready var GLOBAL = get_node("/root/Global")
+
 @export var PLAYER_VELOCITY = 10
 
 const SCREEN_WIDTH = 1920
 const SCREEN_HEIGHT = 1080
+
+var current_item = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,11 +41,18 @@ func _process(delta):
 	
 	# Layering
 	for npc in $Scroll/NPCs.get_children():
-		var npc_real_y = npc.get_node("NPCFollow").position.y + $Scroll.position.y + 50
+		var npc_real_y = npc.get_node("NPCFollow").position.y + $Scroll.position.y + npc.sprite_down_point
 		if npc_real_y < $Player.position.y + 130:
 			npc.z_index = -1
 		if npc_real_y >= $Player.position.y + 130:
 			npc.z_index = 1
+	
+	for environment_obj in $Scroll/Environment.get_children():
+		var real_y = environment_obj.position.y + $Scroll.position.y + environment_obj.down_point
+		if real_y < $Player.position.y + 130:
+			environment_obj.get_node("OnLayer").z_index = -1
+		if real_y >= $Player.position.y + 130:
+			environment_obj.get_node("OnLayer").z_index = 1
 
 func reset():
 	$Scroll.position = Vector2(-960, -2700)
@@ -52,23 +63,43 @@ func reset():
 	$Player.scroll_up_limit = 540/2
 	$Player.scroll_down_limit = 540/2
 	
-	#await get_tree().create_timer(2).timeout
-	#$UILayer/IncidentTimer.go()
+	if (GLOBAL.failed_loops > 0):
+		await get_tree().create_timer(2).timeout
+		$UILayer/IncidentTimer.go()
 
 
 func _on_incident_timer_time_up():
 	var tween = get_tree().create_tween()
-	tween.tween_property($UILayer/Bleak, "color", Color("#171d29a0"), 2.0)
+	tween.tween_property($UILayer/ColorOverlay, "color", Color("#000000ff"), 0.5)
+	
+	await get_tree().create_timer(0.5).timeout
+	freeze()
+	
+	GLOBAL.failed_loops += 1
+	
+	await get_tree().create_timer(1.5).timeout
+	tween = get_tree().create_tween()
+	tween.tween_property($UILayer/Failure, "self_modulate", Color("#ffffffff"), 5)
 
 func add_player_interactives():
-	for interactive in $Scroll/Items.get_children():
+	# Interactive Objects
+	for item in $Scroll/Items.get_children():
+		var interactive = item.get_node("Interactable")
 		interactive.area_entered.connect(interactive_player_enter_check.bind(interactive))
 		interactive.area_exited.connect(interactive_player_exit_check.bind(interactive))
+		item.picked_up.connect(on_item_pickup)
 	
+	# NPCs
 	for npc in $Scroll/NPCs.get_children():
 		var interactive = npc.get_node("NPCFollow/Interactable")
 		interactive.area_entered.connect(interactive_player_enter_check.bind(interactive))
 		interactive.area_exited.connect(interactive_player_exit_check.bind(interactive))
+	
+	# Environment Overlays
+	for environment_obj in $Scroll/Environment.get_children():
+		if (environment_obj.has_node("Overlay") and environment_obj.has_node("OverlayChecker")):
+			environment_obj.get_node("OverlayChecker").area_entered.connect(overlay_player_enter_check.bind(environment_obj))
+			environment_obj.get_node("OverlayChecker").area_exited.connect(overlay_player_exit_check.bind(environment_obj))
 
 func interactive_player_enter_check(area, interactive):
 	# If body is the player, add to list of interactives
@@ -79,3 +110,54 @@ func interactive_player_exit_check(area, interactive):
 	# If body is the player, remove from list of interactives
 	if (area == $Player/PlayerInteraction):
 		$Player.on_interaction_area_exited(interactive)
+
+func overlay_player_enter_check(area, environment_obj):
+	# If body is the player, add to list of interactives
+	if (area == $Player/PlayerBox):
+		environment_obj.on_overlay_active()
+
+func overlay_player_exit_check(area, environment_obj):
+	# If body is the player, add to list of interactives
+	if (area == $Player/PlayerBox):
+		environment_obj.on_overlay_inactive()
+
+func on_item_pickup(id):
+	print("Picked up a(n) ", id)
+	if (current_item == ""):
+		$UILayer/Inventory.put_inventory_item(id)
+	else:
+		$UILayer/Inventory.swap_inventory_item(id)
+	
+	current_item = id
+
+func freeze():
+	$Player.frozen = true
+	for npc in $Scroll/NPCs.get_children():
+		npc.frozen = true
+
+
+
+func _on_dialogue_engine_dialogue_finished(type, id):
+	for item in $Scroll/Items.get_children():
+		if ("on_dialogue_finished" in item):
+			_on_dialogue_engine_item_not_usable()
+			item.on_dialogue_finished(type, id)
+
+
+func _on_dialogue_engine_item_usable():
+	$UILayer/Inventory.enable_item()
+
+func _on_dialogue_engine_item_not_usable():
+	$UILayer/Inventory.disable_item()
+
+
+
+func _on_inventory_item_used():
+	# Sanity Check
+	if $UILayer/DialogueEngine.active:
+		if (current_item == "gun"):
+			$UILayer/DialogueEngine.override_upper("I'm sorry I had to do this.", 0.75)
+			await $UILayer/DialogueEngine.continued_dialogue
+			
+			# BANG
+			$UILayer/ColorOverlay.color = Color("#000000ff")
