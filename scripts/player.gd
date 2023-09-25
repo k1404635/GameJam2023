@@ -21,6 +21,8 @@ func _ready():
 	update_interactions()
 
 func _process(delta):
+	if Input.is_action_pressed("pause"):
+		get_tree().call_group("Pause", "pause")
 	if Input.is_action_just_pressed("interact") and not(in_interaction) and interaction_timeout == 0:
 		execute_interactions()
 	if (interaction_timeout > 0):
