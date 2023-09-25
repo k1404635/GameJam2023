@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://dk2qsktna2xdr"]
+[gd_scene load_steps=50 format=3 uid="uid://dk2qsktna2xdr"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_tjtwd"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_ovl6i"]
@@ -22,6 +22,10 @@
 [ext_resource type="Texture2D" uid="uid://fnwxyymaqgwg" path="res://assets/characters/single_body.png" id="20_35bcc"]
 [ext_resource type="Texture2D" uid="uid://0jhle6v6odjb" path="res://assets/characters/shopkeeper_body.png" id="21_mn1dq"]
 [ext_resource type="Texture2D" uid="uid://ba3qv325eyc27" path="res://assets/characters/criminal_body.png" id="22_nu6ys"]
+[ext_resource type="FontFile" uid="uid://ulku0bmfw857" path="res://assets/font/serif.otf" id="23_lsgmq"]
+[ext_resource type="Texture2D" uid="uid://d2l3wtfu77p2u" path="res://assets/scenery/blood.png" id="23_t1qks"]
+[ext_resource type="Texture2D" uid="uid://bpo3541qsqetr" path="res://assets/characters/killer.png" id="25_gyox7"]
+[ext_resource type="AudioStream" uid="uid://pa1lsbnpjgq5" path="res://assets/audio/danger.mp3" id="26_gtqhv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4a0i"]
 atlas = ExtResource("3_dyhc0")
@@ -209,7 +213,7 @@ _data = {
 
 [sub_resource type="LabelSettings" id="LabelSettings_8p77y"]
 line_spacing = 40.0
-font = ExtResource("4_ddeco")
+font = ExtResource("23_lsgmq")
 font_size = 72
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
@@ -228,6 +232,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(960, 1280)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Killer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2020, 540)]
 }
 
 [sub_resource type="Animation" id="Animation_p74kk"]
@@ -261,6 +277,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(960, 880), Vector2(960, 1280), Vector2(960, 1280)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Killer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5, 2),
+"transitions": PackedFloat32Array(1.2, 1.2),
+"update": 0,
+"values": [Vector2(2020, 540), Vector2(1060, 1230)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lxdqv"]
 _data = {
@@ -276,7 +304,6 @@ gun = ExtResource("8_yaklc")
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(960, 540)
 script = ExtResource("2_ovl6i")
-speed_multiplier = 5.0
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="Player"]
 position = Vector2(-5, 0)
@@ -318,6 +345,11 @@ shape = SubResource("CapsuleShape2D_vfmga")
 position = Vector2(960, 1280)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("5_fh3g4")
+
+[node name="Killer" type="Sprite2D" parent="."]
+position = Vector2(2020, 540)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("25_gyox7")
 
 [node name="Scroll" type="Node2D" parent="."]
 
@@ -490,7 +522,7 @@ libraries = {
 }
 
 [node name="Suspect1" type="TextureRect" parent="UILayer"]
-z_index = 15
+z_index = 17
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -503,7 +535,7 @@ expand_mode = 5
 stretch_mode = 5
 
 [node name="Suspect2" type="TextureRect" parent="UILayer"]
-z_index = 15
+z_index = 17
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -523,6 +555,19 @@ offset_right = -1920.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("22_nu6ys")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Blood" type="TextureRect" parent="UILayer"]
+z_index = 16
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1920.0
+offset_right = -1920.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("23_t1qks")
 expand_mode = 3
 stretch_mode = 5
 
@@ -546,6 +591,8 @@ libraries = {
 }
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("26_gtqhv")
+volume_db = -50.0
 
 [connection signal="item_used" from="UILayer/Inventory" to="." method="_on_inventory_item_used"]
 [connection signal="dialogue_finished" from="UILayer/DialogueEngine" to="." method="_on_dialogue_engine_dialogue_finished"]

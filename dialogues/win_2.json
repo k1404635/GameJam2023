@@ -1,0 +1,24 @@
+{
+	"settings": {
+		"behavior": "back_and_forth_rev"
+	},
+
+	"portraits": {
+		"upper": "assets/characters/player_portrait.png",
+		"lower": "assets/characters/unknown_portrait.png"
+	},
+
+	"upper": [
+		"I... I am so sorry.",
+		"...",
+		"No…! It was my fault... I shouldn’t have carried the gun within a child’s reach.",
+		"... Thank you..."
+	],
+
+	"lower": [
+		"Mr. Deppart, I am so glad to see you're awake.",
+		"...I heard that you got into a coma from an accident. At first, I thought you got what you deserved. It would be a lie if I said that I didn’t resent you for what happened to Ida.",
+		"Deep down, I knew that it was just an accident. I just... didn’t want to admit my negligence... led to her death. I needed someone to blame.",
+		"I don’t want to see anyone dying anymore, and... I don’t want you to live your life stricken with guilt from what was an accident. I... forgive you."
+	]
+}

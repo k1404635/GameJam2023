@@ -10,6 +10,8 @@ const SCREEN_HEIGHT = 1080
 
 var current_talk_npc = -1
 
+var FINAL_WIN = false
+
 var no_pause = false
 var current_item = ""
 
@@ -83,7 +85,8 @@ func reset():
 	$Player.scroll_up_limit = 540/2
 	$Player.scroll_down_limit = 540/2
 	
-	randomize_gun()
+	if (GLOBAL.loops > 0):
+		randomize_gun()
 	
 	freeze()
 	await get_tree().create_timer(2).timeout
@@ -110,13 +113,19 @@ func reset():
 			$UILayer/DialogueEngine.play_dialogue_file("dialogues/intro_2_0.json")
 		3:
 			$UILayer/DialogueEngine.play_dialogue_file("dialogues/intro_3_0.json")
+		4:
+			$UILayer/DialogueEngine.play_dialogue_file("dialogues/intro_4_0.json")
 	
 	await $UILayer/DialogueEngine.dialogue_finished
 	unfreeze()
 	
 	if (GLOBAL.loops > 0):
+		var tween = get_tree().create_tween()
+		tween.tween_property($MusicPlayer, "volume_db", -10, 1.0)
+		$MusicPlayer.play()
 		await get_tree().create_timer(1).timeout
 		$UILayer/IncidentTimer.go()
+		
 	if (GLOBAL.loops == 0):
 		end_loop()
 
@@ -130,14 +139,14 @@ func randomize_gun():
 	
 	var gun_scene = gun.instantiate()
 	gun_scene.position = gun_positions[randi() % len(gun_positions)]
+	print("Gun at ", gun_scene.position)
 	
-	var gun_image = Image.load_from_file("res://assets/items/gun.png")
-	var sprite = ImageTexture.create_from_image(gun_image)
+	var sprite = load("res://assets/items/gun.png")
 	var pickup_quip = "This might be useful."
 	var pickup_name = "gun"
 	gun_scene.init_with_vals(sprite, pickup_quip, pickup_name)
 	
-	if (GLOBAL.loops > 1):
+	if (GLOBAL.loops > 0):
 		var interactive = gun_scene.get_node("Interactable")
 		interactive.area_entered.connect(interactive_player_enter_check.bind(interactive))
 		interactive.area_exited.connect(interactive_player_exit_check.bind(interactive))
@@ -155,8 +164,7 @@ func _on_incident_timer_time_up():
 	freeze()
 	
 	await get_tree().create_timer(1.5).timeout
-	tween = get_tree().create_tween()
-	tween.tween_property($UILayer/Failure, "self_modulate", Color("#ffffffff"), 5)
+	get_tree().change_scene_to_file("res://scenes/fail_screen.tscn")
 
 func add_player_interactives():
 	# Interactive Objects
@@ -206,6 +214,26 @@ func on_item_pickup(id):
 		$UILayer/Inventory.swap_inventory_item(id)
 	
 	current_item = id
+	
+	if (id == "gun" and GLOBAL.loops == 4):
+		$UILayer/IncidentTimer.end()
+		
+		var tween = get_tree().create_tween()
+		tween.tween_property($MusicPlayer, "volume_db", -50, 1.0)
+		await get_tree().create_timer(1).timeout
+		$MusicPlayer.stop()
+		
+		freeze()
+		$UILayer/DialogueEngine.play_dialogue_file("dialogues/player.json")
+		await $UILayer/DialogueEngine.dialogue_finished
+		
+		if (not(FINAL_WIN)):
+			$UILayer/ColorOverlay.color = Color("#000000ff")
+			GLOBAL.worst_end = true
+			
+			await get_tree().create_timer(2).timeout
+			
+			get_tree().change_scene_to_file("res://scenes/fail_screen.tscn")
 
 func freeze():
 	no_pause = true
@@ -248,8 +276,15 @@ func _on_inventory_item_used():
 					can_kill_index = 1
 				"criminal":
 					can_kill_index = 2
+				"player":
+					can_kill_index = 3
 			
-			if (not(GLOBAL.suspects_killed[can_kill_index])):
+			if (can_kill_index == 3):
+				$UILayer/DialogueEngine.override_upper("I have no other choice.", 0.75)
+				FINAL_WIN = true
+				await $UILayer/DialogueEngine.continued_dialogue
+				end_loop(can_kill_index)
+			elif (not(GLOBAL.suspects_killed[can_kill_index])):
 				$UILayer/DialogueEngine.override_upper("I'm sorry I had to do this.", 1)
 				await $UILayer/DialogueEngine.continued_dialogue
 				GLOBAL.suspects_killed[can_kill_index] = true
@@ -265,14 +300,22 @@ func end_loop(just_killed: int = -1):
 	
 	GLOBAL.loops += 1
 	$UILayer/DialogueEngine.end_dialogue()
-	$UILayer/DialogueEngine.hide_dialogue()
 	$UILayer/Inventory.discard_items()
+	
+	$MusicPlayer.volume_db = -50
+	$MusicPlayer.stop()
 	
 	await get_tree().create_timer(3).timeout
 	
-	if (GLOBAL.loops > 0):
+	if (GLOBAL.loops == 5):
+		await get_tree().create_timer(5).timeout
+		get_tree().change_scene_to_file("res://scenes/win_screen.tscn")
+	elif (GLOBAL.loops > 1):
 		var slide = get_tree().create_tween()
 		slide.tween_property($UILayer.get_node("Suspect" + str(just_killed + 1)), "position", Vector2(0, 0), 1.5).set_trans(Tween.TRANS_ELASTIC)
+		var blood = get_tree().create_tween()
+		$UILayer/Blood.self_modulate = Color(1, 1, 1, 1)
+		blood.tween_property($UILayer/Blood, "position", Vector2(0, 0), 1.5).set_trans(Tween.TRANS_ELASTIC)
 		await get_tree().create_timer(1.5).timeout
 		var idname = ""
 		match just_killed:
@@ -292,9 +335,12 @@ func end_loop(just_killed: int = -1):
 		var fadeout = get_tree().create_tween()
 		fadeout.tween_property($UILayer.get_node("Suspect" + str(just_killed + 1)), "self_modulate", Color(0, 0, 0, 0), 1.5)
 		fadeout.tween_property($UILayer/SuspectLabel, "self_modulate", Color(0, 0, 0, 0), 1.5)
+		var bloodout = get_tree().create_tween()
+		bloodout.tween_property($UILayer/Blood, "self_modulate", Color(1, 1, 1, 0), 1.5)
 		$UILayer/SuspectLabel.visible = false
 	
 	await get_tree().create_timer(2).timeout
+	$UILayer/Blood.position = Vector2(-1920, 0)
 	
 	reset()
 	

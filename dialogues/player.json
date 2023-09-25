@@ -1,0 +1,24 @@
+{
+	"settings": {
+		"id": "player"
+	},
+
+	"portraits": {
+		"upper": "assets/characters/player_portrait.png"
+	},
+
+	"upper": [
+		"It...",
+		"Can't...",
+		"Be...",
+		"...",
+		"IT'S NOT ME!",
+		"I CAN'T BE THE KILLER!",
+		"IT'S IMPOSSIBLE!",
+		"WHAT DO I MAKE OF THIS!",
+		"...",
+		"...",
+		"...",
+		"I can't continue this anymore."
+	],
+}

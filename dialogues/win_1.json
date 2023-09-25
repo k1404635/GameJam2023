@@ -1,0 +1,17 @@
+{
+	"portraits": {
+		"upper": "assets/characters/player_portrait.png",
+		"lower": "assets/characters/unknown_portrait.png"
+	},
+
+	"upper": [
+		"...",
+		"What happened?",
+		"(So... it was all just a dream?... It was me... I killed her...)"
+	],
+
+	"lower": [
+		"Mr. Deppart? He's finally Awake!",
+		"You got into a huge car accident and were in a coma for 3 months!",
+	]
+}
