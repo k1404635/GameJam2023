@@ -9,14 +9,25 @@
 	},
 
 	"upper": [
-		"Hey........",
-		"Okay... Well anyways, have you seen anything weird lately?",
-		"Does anything feel off about the park?",
+		"Hello.",
+		"Just looking around.",
+		"Do you know anything about the man over there?",
+		"...?",
+		"...",
+		"...?",
+		"Where did you hear about that?",
+		"... Have a nice rest of your day."
 	],
 
 	"lower": [
-		"What? Oh the scar. Ignore it.",
-		"Aside from you? No. I'm just wandering around the park right now.",
-		"No, not really. I've been looking around for a while and I haven't seen anything... suspicious."
+		"What's up?",
+		"Hmm.",
+		"Well, it would be wise to not bother the dude over there.",
+		"I don't know, I just don’t like his vibe.",
+		"Haha, just kidding. But you really shouldn’t. I heard he is related to some gangs or something like that.",
+		"Oh yeah, and the woman over there,",
+		"I heard that she killed his husband for the insurance money.",
+		"Reliable sources of course.",
+		"You too, my guy!"
 	]
 }

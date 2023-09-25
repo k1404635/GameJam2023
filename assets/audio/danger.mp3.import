@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/danger.mp3-fe9ee4ff661275d77a4f649b7d698c81.m
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

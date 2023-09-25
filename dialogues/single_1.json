@@ -9,15 +9,17 @@
 	},
 
 	"upper": [
-		"Hey, is your child wandering around right now?",
-		"Oh...",
-		"I thought the kid I that just talked to me was yours... Is she not?",
-		"Alright."
+		"Hello.",
+		"The weather is pretty nice today.",
+		"That’s your daughter over there, right?",
+		"Your daughter is quite playful, but she seems lonely. Does she not have any friends to play with?",
+		"I see..."
 	],
 
 	"lower": [
-		"No, sorry, she's with her father right now.",
-		"Yeah, she's in the nearest other city. Why do you ask?",
-		"There's another kid over here? That's odd, I thought I was the only parent here."
+		"What do you want?",
+		"...? Yeah... it is.",
+		"Over there? Yes",
+		"... (sighs) She doesn’t leave the house often.",
 	]
 }

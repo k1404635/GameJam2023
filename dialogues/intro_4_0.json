@@ -1,0 +1,9 @@
+{
+	"portraits": {
+		"upper": "assets/characters/player_portrait.png"
+	},
+
+	"upper": [
+		"That's it. This time, I'm figuring out who it is."
+	]
+}

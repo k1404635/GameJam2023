@@ -9,15 +9,21 @@
 	},
 
 	"upper": [
-		"Hello there.",
-		"I'm... honestly not sure. I just feel like something's off here. Do you feel anything different about today?",
-		"Okay, but is there really nothing wrong? I mean I just saw this girl come by and...",
-		"...fine."
+		"Hello.",
+		"...It is.",
+		"... (that's kinda creepy) I guess so...?",
+		"I mean... where else would he look in this small park? She’s playing in the middle of it...",
+		"How so?",
+		"She doesn’t seem that awful. She brought the child out for her to play.",
+		"At least there’s someone watching her so that she doesn’t get hurt."
 	],
 
 	"lower": [
-		"What do you want.",
-		"I'm too busy to care. I have plenty of business to take care of and I need to maximize the efficiency of my break.",
-		"Go away before I do something about you."
+		"Hello! Isn't it a lovely day?",
+		"I saw you talking to the little girl over there. Isn’t she such a cute little child?",
+		"She looks like she’s having so much fun playing with that ball. That man over there is peaking over in her direction every so often... He better not even try to get close to her.",
+		"No! I know a criminal when I see one... I’ll keep my eyes on him... The girl’s mom isn’t a good mom.",
+		"Look at her. She’s not even paying attention to the child. The girl would be better off without a mom like that!",
+		"It’s okay. I’ll do her job for her."
 	]
 }

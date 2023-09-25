@@ -1,0 +1,89 @@
+[gd_scene load_steps=9 format=3 uid="uid://b241i5umcfsgw"]
+
+[ext_resource type="Script" path="res://scenes/fail_screen.gd" id="1_g1rka"]
+[ext_resource type="Texture2D" uid="uid://lwb7wt5i1l2k" path="res://assets/scenery/failure.png" id="1_pwfw3"]
+[ext_resource type="Texture2D" uid="uid://ceqph61qed7sx" path="res://assets/scenery/bad_endscreen.png" id="2_qsvwo"]
+[ext_resource type="Texture2D" uid="uid://cr55ewkgjsvf3" path="res://assets/UI/playagain_button.png" id="3_7frse"]
+[ext_resource type="Texture2D" uid="uid://dfjxfv6tuqbp2" path="res://assets/UI/playagain_button_pressed.png" id="4_gr6vg"]
+[ext_resource type="Texture2D" uid="uid://bvx61anwel15u" path="res://assets/UI/quit_button.png" id="5_gu37p"]
+[ext_resource type="Texture2D" uid="uid://e80cxworq1as" path="res://assets/UI/quit_button_pressed.png" id="6_e155v"]
+[ext_resource type="AudioStream" uid="uid://bpcc5kw0jlk8j" path="res://assets/audio/flatline.mp3" id="8_tq82s"]
+
+[node name="FailScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g1rka")
+
+[node name="WorstImage" type="TextureRect" parent="."]
+visible = false
+z_index = -4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_qsvwo")
+expand_mode = 2
+
+[node name="FailImage" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_pwfw3")
+stretch_mode = 6
+
+[node name="Fade" type="ColorRect" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="PlayAgainButton" type="TextureButton" parent="."]
+z_index = 1
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -200.0
+offset_right = 750.0
+grow_vertical = 0
+scale = Vector2(0.75, 0.75)
+texture_normal = ExtResource("3_7frse")
+texture_pressed = ExtResource("4_gr6vg")
+
+[node name="QuitButton" type="TextureButton" parent="."]
+z_index = 1
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -200.0
+offset_right = 100.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.75, 0.75)
+texture_normal = ExtResource("5_gu37p")
+texture_pressed = ExtResource("6_e155v")
+
+[node name="Audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_tq82s")
+
+[connection signal="pressed" from="PlayAgainButton" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]

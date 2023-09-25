@@ -156,8 +156,7 @@ func start_dialogue(params, upper_filepath: String = "", lower_filepath: String 
 	show_lower = params["show_lower"]
 	upper_text = params["upper_text"]
 	
-	var upper_image = Image.load_from_file("res://" + upper_filepath)
-	var upper_texture = ImageTexture.create_from_image(upper_image)
+	var upper_texture = load("res://" + upper_filepath)
 	$UpperBox/Portrait.texture = upper_texture
 	
 	current_upper = 0
@@ -168,8 +167,7 @@ func start_dialogue(params, upper_filepath: String = "", lower_filepath: String 
 		behavior = params["behavior"]
 		lower_text = params["lower_text"]
 		
-		var lower_image = Image.load_from_file("res://" + lower_filepath)
-		var lower_texture = ImageTexture.create_from_image(lower_image)
+		var lower_texture = load("res://" + lower_filepath)
 		$LowerBox/Portrait.texture = lower_texture
 		
 		current_lower = 0
@@ -210,9 +208,6 @@ func end_dialogue():
 	current_lower = 0
 	
 	dialogue_finished.emit(dialogue_type, dialogue_id)
-
-func hide_dialogue():
-	$DialogueBoxAnimation.play("upper_and_lower_out")
 	
 
 
