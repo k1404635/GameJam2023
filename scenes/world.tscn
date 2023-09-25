@@ -1,14 +1,14 @@
-[gd_scene load_steps=39 format=3 uid="uid://dk2qsktna2xdr"]
+[gd_scene load_steps=46 format=3 uid="uid://dk2qsktna2xdr"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_tjtwd"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_ovl6i"]
 [ext_resource type="Texture2D" uid="uid://caeolyfmyy8aa" path="res://assets/characters/player_spritesheet_ref.png" id="3_dyhc0"]
 [ext_resource type="FontFile" uid="uid://cf3twlhcqippa" path="res://assets/font/normal_700.ttf" id="4_ddeco"]
 [ext_resource type="PackedScene" uid="uid://c4mxg6pn32x0l" path="res://scenes/dialogue_engine.tscn" id="5_3u4qo"]
+[ext_resource type="Texture2D" uid="uid://bxq3v16dlifm3" path="res://assets/characters/girl.png" id="5_fh3g4"]
 [ext_resource type="Texture2D" uid="uid://k7w3slxt6w61" path="res://assets/scenery/MAP_SCALE.png" id="5_pcg2h"]
 [ext_resource type="PackedScene" uid="uid://bb46uky5tiqcy" path="res://scenes/incident_timer.tscn" id="6_hrpew"]
 [ext_resource type="Shader" path="res://blur.gdshader" id="7_17qm0"]
-[ext_resource type="Texture2D" uid="uid://di6fkotm1iaqp" path="res://assets/items/gun.png" id="7_hv87u"]
 [ext_resource type="PackedScene" uid="uid://fh58stjs87b" path="res://scenes/npc.tscn" id="8_2d66c"]
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="8_82ubd"]
 [ext_resource type="PackedScene" uid="uid://r2g5rk1q14p6" path="res://scenes/world_objects/pickup_item.tscn" id="8_yaklc"]
@@ -19,7 +19,9 @@
 [ext_resource type="PackedScene" uid="uid://bkov2m3iahtpv" path="res://scenes/world_objects/bench.tscn" id="10_xr8fr"]
 [ext_resource type="Texture2D" uid="uid://lwb7wt5i1l2k" path="res://assets/scenery/failure.png" id="13_m6c3w"]
 [ext_resource type="PackedScene" uid="uid://dq6kxu6q3tj2e" path="res://scenes/inventory.tscn" id="14_oets4"]
-[ext_resource type="Texture2D" uid="uid://btdotfqyn48we" path="res://assets/UI/AGAIN.png" id="18_s44bm"]
+[ext_resource type="Texture2D" uid="uid://fnwxyymaqgwg" path="res://assets/characters/single_body.png" id="20_35bcc"]
+[ext_resource type="Texture2D" uid="uid://0jhle6v6odjb" path="res://assets/characters/shopkeeper_body.png" id="21_mn1dq"]
+[ext_resource type="Texture2D" uid="uid://ba3qv325eyc27" path="res://assets/characters/criminal_body.png" id="22_nu6ys"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4a0i"]
 atlas = ExtResource("3_dyhc0")
@@ -205,8 +207,71 @@ _data = {
 "Unpause": SubResource("Animation_n3ah7")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_8p77y"]
+line_spacing = 40.0
+font = ExtResource("4_ddeco")
+font_size = 72
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_lv141"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Girl:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(960, 1280)]
+}
+
+[sub_resource type="Animation" id="Animation_p74kk"]
+resource_name = "girl_in"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Girl:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(0.5, 0.5, 1),
+"update": 0,
+"values": [Vector2(960, 1280), Vector2(960, 880), Vector2(960, 880)]
+}
+
+[sub_resource type="Animation" id="Animation_qaoc8"]
+resource_name = "girl_out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Girl:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(2, 2, 1),
+"update": 0,
+"values": [Vector2(960, 880), Vector2(960, 1280), Vector2(960, 1280)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lxdqv"]
+_data = {
+"RESET": SubResource("Animation_lv141"),
+"girl_in": SubResource("Animation_p74kk"),
+"girl_out": SubResource("Animation_qaoc8")
+}
+
 [node name="World" type="Node2D"]
 script = ExtResource("1_tjtwd")
+gun = ExtResource("8_yaklc")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(960, 540)
@@ -249,6 +314,11 @@ shape = SubResource("CircleShape2D_xol0p")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/PlayerBox"]
 shape = SubResource("CapsuleShape2D_vfmga")
 
+[node name="Girl" type="Sprite2D" parent="."]
+position = Vector2(960, 1280)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_fh3g4")
+
 [node name="Scroll" type="Node2D" parent="."]
 
 [node name="Back" type="Sprite2D" parent="Scroll"]
@@ -259,12 +329,6 @@ centered = false
 
 [node name="Items" type="Node2D" parent="Scroll"]
 
-[node name="PickupItem" parent="Scroll/Items" instance=ExtResource("8_yaklc")]
-position = Vector2(3540, 300)
-sprite = ExtResource("7_hv87u")
-pickup_quip = "This might be necessary."
-pickup_name = "gun"
-
 [node name="NPCs" type="Node2D" parent="Scroll"]
 
 [node name="NPCPath" parent="Scroll/NPCs" instance=ExtResource("8_2d66c")]
@@ -272,19 +336,21 @@ curve = SubResource("Curve2D_rp2uf")
 sprite = ExtResource("9_m48kb")
 sprite_down_point = 130.0
 dialogue_file = "dialogues/single_1.json"
-pause_points = Array[float]([0.2])
+pause_points = Array[float]([0.2, 0.65])
 
 [node name="NPCPath2" parent="Scroll/NPCs" instance=ExtResource("8_2d66c")]
 curve = SubResource("Curve2D_h5p6p")
 sprite = ExtResource("9_eliyb")
 sprite_down_point = 140.0
 dialogue_file = "dialogues/shopkeeper_1.json"
+pause_points = Array[float]([0.4, 0.8])
 
 [node name="NPCPath3" parent="Scroll/NPCs" instance=ExtResource("8_2d66c")]
 curve = SubResource("Curve2D_25bm0")
 sprite = ExtResource("10_mya5j")
 sprite_down_point = 130.0
 dialogue_file = "dialogues/criminal_1.json"
+pause_points = Array[float]([0.3, 0.65])
 
 [node name="Collisions" type="Node2D" parent="Scroll"]
 
@@ -336,18 +402,6 @@ mouse_filter = 2
 
 [node name="IncidentTimer" parent="UILayer" instance=ExtResource("6_hrpew")]
 mouse_filter = 2
-
-[node name="AGAIN" type="TextureRect" parent="UILayer"]
-self_modulate = Color(1, 1, 1, 0)
-z_index = 14
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("18_s44bm")
-expand_mode = 3
-stretch_mode = 5
 
 [node name="Failure" type="TextureRect" parent="UILayer"]
 self_modulate = Color(1, 1, 1, 0)
@@ -433,6 +487,62 @@ text = "Quit"
 autoplay = "Unpause"
 libraries = {
 "": SubResource("AnimationLibrary_gnjgk")
+}
+
+[node name="Suspect1" type="TextureRect" parent="UILayer"]
+z_index = 15
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1920.0
+offset_right = -1920.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_35bcc")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Suspect2" type="TextureRect" parent="UILayer"]
+z_index = 15
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1920.0
+offset_right = -1920.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("21_mn1dq")
+
+[node name="Suspect3" type="TextureRect" parent="UILayer"]
+z_index = 17
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1920.0
+offset_right = -1920.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("22_nu6ys")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="SuspectLabel" type="Label" parent="UILayer"]
+visible = false
+z_index = 17
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "The Shopkeeper was not the Killer."
+label_settings = SubResource("LabelSettings_8p77y")
+horizontal_alignment = 1
+
+[node name="Cutscene" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_lxdqv")
 }
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]

@@ -20,6 +20,11 @@ func _ready():
 	$Interactable.upper_text = upper_text
 	$Interactable.upper_filepath = "assets/characters/player_portrait.png"
 
+func init_with_vals(isprite, ipickup_quip, ipickup_name):
+	sprite = isprite
+	pickup_quip = ipickup_quip
+	pickup_name = ipickup_name
+
 func on_dialogue_finished(type, id):
 	if (type == "item_pickup"):
 		if (id == pickup_name):

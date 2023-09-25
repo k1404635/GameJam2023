@@ -1,0 +1,17 @@
+{
+	"portraits": {
+		"upper": "assets/characters/player_portrait.png"
+	},
+
+	"upper": [
+		"Ugh...",
+		"Wait...",
+		"I'm back here!",
+		"Oh no... that girl's going to approach me and then get killed right in front of me again!",
+		"...",
+		"...",
+		"Where is she?",
+		"Wait, I think it may be a little earlier...",
+		"Maybe I can catch the killer before she's killed!"
+	]
+}

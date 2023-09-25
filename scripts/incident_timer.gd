@@ -13,6 +13,11 @@ func go():
 	$TimerAnimation.play("timer_in")
 	$MainTimer.start()
 
+func stop():
+	$MainTimer.stop()
+	$TimerAnimation.play("RESET")
+	time_elapsed = 0
+
 
 func seconds_left_to_time(time_left: int):
 	var minutes = time_left / 60

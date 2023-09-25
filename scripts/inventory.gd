@@ -56,4 +56,5 @@ func disable_item():
 func _on_action_pressed():
 	if (can_use_item):
 		print("Using Item")
+		can_use_item = false
 		item_used.emit()

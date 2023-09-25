@@ -128,6 +128,8 @@ func type_to_box(text: String, label: RichTextLabel, speed: float = 1.0):
 	typing = true
 	var partial: String = ""
 	
+	var type_time_base = 0.1
+	
 	for ch in range(len(text)):
 		partial += text[ch]
 		label.text = partial
@@ -208,6 +210,9 @@ func end_dialogue():
 	current_lower = 0
 	
 	dialogue_finished.emit(dialogue_type, dialogue_id)
+
+func hide_dialogue():
+	$DialogueBoxAnimation.play("upper_and_lower_out")
 	
 
 
@@ -241,6 +246,10 @@ func play_dialogue_file(filename: String):
 		if ("settings" in dialogue_data):
 			if ("behavior" in dialogue_data["settings"]):
 				params["behavior"] = dialogue_data["settings"]["behavior"]
+			if ("type" in dialogue_data["settings"]):
+				params["type"] = dialogue_data["settings"]["type"]
+			if ("id" in dialogue_data["settings"]):
+				params["id"] = dialogue_data["settings"]["id"]
 		
 		start_dialogue(params, upper_portrait, lower_portrait)
 		
