@@ -6,7 +6,10 @@ extends ColorRect
 
 func _ready() -> void:
 	play_button.pressed.connect(unpause)
-	quit_button.pressed.connect(get_tree().quit)
+	quit_button.pressed.connect(back_to_menu)
+
+func back_to_menu():
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	
 func unpause():
 	play_button.disabled = true

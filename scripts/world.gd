@@ -88,7 +88,9 @@ func reset():
 	if (GLOBAL.loops > 0):
 		randomize_gun()
 	
+	print("Stopping for init")
 	freeze()
+	$UILayer/DialogueEngine.clear_dialogue()
 	await get_tree().create_timer(2).timeout
 	
 	current_item = ""
@@ -116,7 +118,10 @@ func reset():
 		4:
 			$UILayer/DialogueEngine.play_dialogue_file("dialogues/intro_4_0.json")
 	
+	print("And now we wait")
 	await $UILayer/DialogueEngine.dialogue_finished
+	
+	print("Unstopping for init")
 	unfreeze()
 	
 	if (GLOBAL.loops > 0):
@@ -279,18 +284,22 @@ func _on_inventory_item_used():
 				"player":
 					can_kill_index = 3
 			
+			$UILayer/Inventory.can_use_item = false
 			if (can_kill_index == 3):
 				$UILayer/DialogueEngine.override_upper("I have no other choice.", 0.75)
 				FINAL_WIN = true
 				await $UILayer/DialogueEngine.continued_dialogue
+				$Shot.play()
 				end_loop(can_kill_index)
 			elif (not(GLOBAL.suspects_killed[can_kill_index])):
 				$UILayer/DialogueEngine.override_upper("I'm sorry I had to do this.", 1)
 				await $UILayer/DialogueEngine.continued_dialogue
+				$Shot.play()
 				GLOBAL.suspects_killed[can_kill_index] = true
 				end_loop(can_kill_index)
 			else:
 				$UILayer/DialogueEngine.override_upper("(No, they weren't the killer.)", 1)
+				$UILayer/Inventory.can_use_item = true
 
 func end_loop(just_killed: int = -1):
 	# BANG
@@ -301,6 +310,8 @@ func end_loop(just_killed: int = -1):
 	GLOBAL.loops += 1
 	$UILayer/DialogueEngine.end_dialogue()
 	$UILayer/Inventory.discard_items()
+	
+	$UILayer/Inventory.can_use_item = true
 	
 	$MusicPlayer.volume_db = -50
 	$MusicPlayer.stop()
@@ -317,6 +328,7 @@ func end_loop(just_killed: int = -1):
 		$UILayer/Blood.self_modulate = Color(1, 1, 1, 1)
 		blood.tween_property($UILayer/Blood, "position", Vector2(0, 0), 1.5).set_trans(Tween.TRANS_ELASTIC)
 		await get_tree().create_timer(1.5).timeout
+		
 		var idname = ""
 		match just_killed:
 			0:
@@ -324,8 +336,7 @@ func end_loop(just_killed: int = -1):
 			1:
 				idname = "Shopkeeper"
 			2:
-				idname = "Criminal"
-		
+				idname = "Random Guy"
 		var msg = "The " + idname + " was not the killer."
 		$UILayer/SuspectLabel.text = msg
 		$UILayer/SuspectLabel.visible = true

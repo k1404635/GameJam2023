@@ -208,6 +208,16 @@ func end_dialogue():
 	current_lower = 0
 	
 	dialogue_finished.emit(dialogue_type, dialogue_id)
+
+func clear_dialogue():
+	upper_text = []
+	lower_text = []
+	$UpperBox/Text.text = ""
+	$LowerBox/Text.text = ""
+	active = false
+	$UpperBox/Proceed.visible = false
+	$LowerBox/Proceed.visible = false
+	$DialogueBoxAnimation.play("RESET")
 	
 
 

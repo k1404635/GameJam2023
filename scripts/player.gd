@@ -120,9 +120,11 @@ func execute_interactions():
 func on_interaction_finished(_type, _id):
 	# Unfreeze NPC if interaction is from NPC
 	print("Finished Interaction")
-	var cur_interaction_grandparent = all_interactions[0].get_parent().get_parent()
-	if cur_interaction_grandparent is NPC:
-		cur_interaction_grandparent.in_dialogue = false
+	
+	if (len(all_interactions) > 0):
+		var cur_interaction_grandparent = all_interactions[0].get_parent().get_parent()
+		if cur_interaction_grandparent is NPC:
+			cur_interaction_grandparent.in_dialogue = false
 	
 	# Don't activate EVERY person's dialogue finished signal after talking to 1 thing
 	get_parent().get_node("UILayer/DialogueEngine").disconnect("dialogue_finished", on_interaction_finished)

@@ -1,8 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://2sa5b6ufheah"]
+[gd_scene load_steps=6 format=3 uid="uid://x6bmbnn2qvi8"]
 
-[ext_resource type="Script" path="res://Menu.gd" id="1_4n4v0"]
-[ext_resource type="Texture2D" uid="uid://c1d170n1fqt5n" path="res://park1.png" id="2_5kwy8"]
-[ext_resource type="FontFile" uid="uid://217aelqems2l" path="res://ScaryLight-owqdd.ttf" id="2_tbrq8"]
+[ext_resource type="Script" path="res://scripts/Menu.gd" id="1_4n4v0"]
+[ext_resource type="Texture2D" uid="uid://dyniik817lmm5" path="res://assets/scenery/title_screen_bg.png" id="2_qt8f1"]
+[ext_resource type="FontFile" uid="uid://oeusvumljqqh" path="res://assets/font/ScaryLight-owqdd.ttf" id="3_sd0dk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_g5hqf"]
+font = ExtResource("3_sd0dk")
+font_size = 128
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_7ynkr"]
 
@@ -28,7 +33,7 @@ motion_mirroring = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(42, -222)
-texture = ExtResource("2_5kwy8")
+texture = ExtResource("2_qt8f1")
 
 [node name="MarginContainer" type="MarginContainer" parent="ParallaxBackground/ParallaxLayer/Sprite2D"]
 anchors_preset = 8
@@ -51,9 +56,9 @@ layout_mode = 2
 [node name="Label" type="Label" parent="ParallaxBackground/ParallaxLayer/Sprite2D/MarginContainer/VBoxContainerForTitle"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.0784314, 0.145098, 0.12549, 1)
-theme_override_fonts/font = ExtResource("2_tbrq8")
 theme_override_font_sizes/font_size = 120
 text = "The Park"
+label_settings = SubResource("LabelSettings_g5hqf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -71,7 +76,7 @@ layout_mode = 2
 layout_mode = 2
 focus_neighbor_top = NodePath("../../VBoxContainer3/QuitButton")
 theme_override_colors/icon_hover_color = Color(0.027451, 0.105882, 0.2, 1)
-theme_override_fonts/font = ExtResource("2_tbrq8")
+theme_override_fonts/font = ExtResource("3_sd0dk")
 theme_override_font_sizes/font_size = 36
 action_mode = 0
 text = "Play"
@@ -82,7 +87,7 @@ layout_mode = 2
 [node name="QuitButton" type="Button" parent="ParallaxBackground/ParallaxLayer/Sprite2D/MarginContainer/VBoxContainerForTitle/VBoxContainer/VBoxContainer3"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../../VBoxContainer/StartButton")
-theme_override_fonts/font = ExtResource("2_tbrq8")
+theme_override_fonts/font = ExtResource("3_sd0dk")
 theme_override_font_sizes/font_size = 36
 text = "Quit"
 icon = SubResource("ViewportTexture_7ynkr")

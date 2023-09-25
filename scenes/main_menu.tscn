@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dyniik817lmm5" path="res://assets/scenery/title_screen_bg.png" id="1_pn124"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_xna0e"]
-[ext_resource type="FontFile" uid="uid://cf3twlhcqippa" path="res://assets/font/normal_700.ttf" id="2_cga3u"]
+[ext_resource type="FontFile" uid="uid://oeusvumljqqh" path="res://assets/font/ScaryLight-owqdd.ttf" id="3_lcnrj"]
 [ext_resource type="Texture2D" uid="uid://bxn07s8funtxt" path="res://assets/UI/play_button.png" id="4_hg4d1"]
 [ext_resource type="Texture2D" uid="uid://bxdcq213f4uc7" path="res://assets/UI/play_button_pressed.png" id="5_rs2cn"]
 [ext_resource type="AudioStream" uid="uid://dvoafao21akf2" path="res://assets/audio/menu_loop.mp3" id="6_ry2nh"]
@@ -31,14 +31,14 @@ stretch_mode = 6
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.05
+anchor_left = 0.25
 anchor_top = 0.05
-anchor_right = 0.7
-anchor_bottom = 0.3
+anchor_right = 0.75
+anchor_bottom = 0.4
 grow_horizontal = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 25
-theme_override_fonts/normal_font = ExtResource("2_cga3u")
+theme_override_fonts/normal_font = ExtResource("3_lcnrj")
 theme_override_font_sizes/normal_font_size = 192
 text = "The Park"
 autowrap_mode = 0
@@ -57,14 +57,16 @@ color = Color(0, 0, 0, 1)
 
 [node name="Play" type="TextureButton" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.925
-anchor_top = 0.9
-anchor_right = 0.925
-anchor_bottom = 0.9
-offset_left = -600.0
-offset_top = -200.0
-grow_horizontal = 0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -300.0
+offset_right = 300.0
+offset_bottom = -100.0
+grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("4_hg4d1")
 texture_pressed = ExtResource("5_rs2cn")

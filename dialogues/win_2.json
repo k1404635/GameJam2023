@@ -5,7 +5,7 @@
 
 	"portraits": {
 		"upper": "assets/characters/player_portrait.png",
-		"lower": "assets/characters/unknown_portrait.png"
+		"lower": "assets/characters/unknown_portrait_mom.png"
 	},
 
 	"upper": [

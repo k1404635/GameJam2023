@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://dk2qsktna2xdr"]
+[gd_scene load_steps=51 format=3 uid="uid://dk2qsktna2xdr"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_tjtwd"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_ovl6i"]
@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://d2l3wtfu77p2u" path="res://assets/scenery/blood.png" id="23_t1qks"]
 [ext_resource type="Texture2D" uid="uid://bpo3541qsqetr" path="res://assets/characters/killer.png" id="25_gyox7"]
 [ext_resource type="AudioStream" uid="uid://pa1lsbnpjgq5" path="res://assets/audio/danger.mp3" id="26_gtqhv"]
+[ext_resource type="AudioStream" uid="uid://2v556n4h2lcu" path="res://assets/audio/shot.mp3" id="27_c1a5u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4a0i"]
 atlas = ExtResource("3_dyhc0")
@@ -593,6 +594,9 @@ libraries = {
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("26_gtqhv")
 volume_db = -50.0
+
+[node name="Shot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("27_c1a5u")
 
 [connection signal="item_used" from="UILayer/Inventory" to="." method="_on_inventory_item_used"]
 [connection signal="dialogue_finished" from="UILayer/DialogueEngine" to="." method="_on_dialogue_engine_dialogue_finished"]

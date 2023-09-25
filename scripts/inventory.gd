@@ -16,8 +16,7 @@ func _process(delta):
 func put_inventory_item(id):
 	# Assign Texture
 	var texture_path = get_texture_path(id)
-	var image = Image.load_from_file("res://" + texture_path)
-	var texture = ImageTexture.create_from_image(image)
+	var texture = load("res://" + texture_path)
 	$ItemGraphicContainer/ItemGraphic.texture = texture
 
 	# Move in
@@ -26,8 +25,7 @@ func put_inventory_item(id):
 func swap_inventory_item(id):
 	# Assign Texture
 	var texture_path = get_texture_path(id)
-	var image = Image.load_from_file("res://" + texture_path)
-	var texture = ImageTexture.create_from_image(image)
+	var texture = load("res://" + texture_path)
 	$ItemGraphicContainer/ItemGraphic.texture = texture
 
 func discard_items():
@@ -56,5 +54,4 @@ func disable_item():
 func _on_action_pressed():
 	if (can_use_item):
 		print("Using Item")
-		can_use_item = false
 		item_used.emit()
