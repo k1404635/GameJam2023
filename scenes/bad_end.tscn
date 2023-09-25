@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxnxucojyu6jw"]
+
+[ext_resource type="Script" path="res://scripts/bad_end.gd" id="1_p4n0i"]
+[ext_resource type="Texture2D" uid="uid://b4pxbrw8n53dc" path="res://assets/scenery/bad_end.png" id="2_agve4"]
+[ext_resource type="Texture2D" uid="uid://bn46sgo38icmw" path="res://assets/UI/playagain_button.png" id="3_x6dgn"]
+[ext_resource type="Texture2D" uid="uid://c83p3m8xiaw32" path="res://assets/UI/quit_button.png" id="4_dacqt"]
+
+[node name="bad_end" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_p4n0i")
+
+[node name="FadeIn" type="ColorRect" parent="."]
+visible = false
+z_index = 10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -7.0
+offset_top = -74.0
+offset_right = 1931.0
+offset_bottom = 1126.0
+texture = ExtResource("2_agve4")
+
+[node name="PlayAgain" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 151.0
+offset_top = 549.0
+offset_right = 851.0
+offset_bottom = 749.0
+texture_normal = ExtResource("3_x6dgn")
+
+[node name="Quit" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 201.0
+offset_top = 782.0
+offset_right = 801.0
+offset_bottom = 982.0
+texture_normal = ExtResource("4_dacqt")
+
+[connection signal="pressed" from="PlayAgain" to="." method="_on_play_again_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
